@@ -6,22 +6,16 @@ using namespace std;
 
 class TimeCal {
 public:
-    enum Arith {
-        FCFS = 1,
-        SJF = 2
-    };
 
-    int n;//进程数
-    int ArrivalTime[MaxNum];//进程到达时间T[i]
-    int ServiceTime[MaxNum];//进程服务时间S[i]
-    int FinishTime[MaxNum];//完成时间
-    int WholeTime[MaxNum];//周转时间
-    double WeightWholeTime[MaxNum];//带权周转时间
-    double AverageWT_FCFS = 0, AverageWT_SJF = 0;//平均周转时间
-    double AverageWWT_FCFS = 0, AverageWWT_SJF = 0;//平均带权周转时间
-
-    int isArith;//进程算法输入值，用于验证输入,1为FCFS，2为SJF
-    Arith arith;//进程算法值
+    int n{};//进程数
+    int ArrivalTime[MaxNum]{};//进程到达时间T[i]
+    int ServiceTime[MaxNum]{};//进程服务时间S[i]
+    int FinishTime[MaxNum]{};//完成时间
+    int WholeTime[MaxNum]{};//周转时间
+    double WeightWholeTime[MaxNum]{};//带权周转时间
+    double AverageWT = 0;//平均周转时间
+    double AverageWWT = 0;//平均带权周转时间
+    int isArith{};//进程算法输入值，用于验证输入,1为FCFS，2为SJF
 
     //输入进程信息
     //将输入的ArrivalTime信息与ServiceTime信息存储进数组
@@ -47,10 +41,8 @@ public:
     void IsArith() {
         if (isArith == 1) {
             cout << endl << "您选择的是1-FCFS算法" << endl;
-            arith = FCFS;
         } else if (isArith == 2) {
             cout << endl << "您选择的是2-SJF算法" << endl;
-            arith = SJF;
         } else {
             cout << "算法值" << isArith << "有误,请重新输入正确的算法类型（1-FCFS，2-SJF）" << endl;
             InputArith();
@@ -74,13 +66,13 @@ public:
             WeightWholeTime[i] = (double) WholeTime[i] / ServiceTime[i];
 
             //计算平均周转时间
-            AverageWT_FCFS += WholeTime[i];
+            AverageWT += WholeTime[i];
 
             //计算平局带权周转时间
-            AverageWWT_FCFS += WeightWholeTime[i];
+            AverageWWT += WeightWholeTime[i];
         }
-        AverageWT_FCFS = (double) AverageWT_FCFS / n;
-        AverageWWT_FCFS = (double) AverageWWT_FCFS / n;
+        AverageWT = (double) AverageWT / n;
+        AverageWWT = (double) AverageWWT / n;
     }
 
     //调用SJF算法进行调度计算
@@ -166,19 +158,19 @@ public:
             WeightWholeTime[i] = (double) WholeTime[i] / ServiceTime[i];
 
             //计算平均周转时间
-            AverageWT_FCFS += WholeTime[i];
+            AverageWT += WholeTime[i];
 
             //计算平局带权周转时间
-            AverageWWT_FCFS += WeightWholeTime[i];
+            AverageWWT += WeightWholeTime[i];
         }
         cout << endl;
 
-        AverageWT_FCFS = (double) AverageWT_FCFS / n;
-        AverageWWT_FCFS = (double) AverageWWT_FCFS / n;
+        AverageWT = (double) AverageWT / n;
+        AverageWWT = (double) AverageWWT / n;
     }
 
     //输出调度过程
-    void PrintAttemper() {
+    void PrintSchedule() {
         int temp = 0;
         int CopyFinishTime[MaxNum];//备份服务时间
 
@@ -206,9 +198,9 @@ public:
                     if (i != 2) { cout << "进程" << temp << "开始运行" << endl; }
                     cout << "时刻" << FinishTime[temp] + 1;
                     if (i == n) {
-                        for (int i = 1; i < n; i++) {
-                            if (CopyFinishTime[i] > 0) {
-                                temp = i;
+                        for (int j = 1; j < n; j++) {
+                            if (CopyFinishTime[j] > 0) {
+                                temp = j;
                             }
                         }
                         cout << "进程" << temp << "开始运行" << endl << endl;
@@ -225,43 +217,43 @@ public:
     void Print() {
         if (FinishTime[1] >= 0)//判断是否已有数据输入
         {
-            cout << "周转信息如下表：" << endl;
+            cout << left << setw(15) << "周转信息如下表：" << endl;
 
-            cout << "进程名      ";
+            cout << left << setw(15) << "";
             for (int i = 1; i <= n; i++) {
-                cout << setw(10) << i << " ";
+                cout << right << setw(10) << "进程" << i;
             }
             cout << endl;
 
-            cout << "到达时间    ";
+            cout << left << setw(15) << "到达时间";
             for (int i = 1; i <= n; i++) {
-                cout << setw(10) << ArrivalTime[i] << " ";
+                cout << right << setw(10) << ArrivalTime[i];
             }
             cout << endl;
 
-            cout << "服务时间    ";
+            cout << left << setw(15) << "服务时间";
             for (int i = 1; i <= n; i++) {
-                cout << setw(10) << ServiceTime[i] << " ";
+                cout << right << setw(10) << ServiceTime[i];
             }
             cout << endl;
 
-            cout << "完成时间    ";
+            cout << left << setw(15) << "完成时间";
             for (int i = 1; i <= n; i++) {
-                cout << setw(10) << FinishTime[i] << " ";
+                cout << right << setw(10) << FinishTime[i];
             }
             cout << endl;
 
-            cout << "周转时间    ";
+            cout << left << setw(15) << "周转时间";
             for (int i = 1; i <= n; i++) {
-                cout << setw(10) << WholeTime[i] << " ";
+                cout << right << setw(10) << WholeTime[i];
             }
-            cout << setw(10) << "平均周转时间:" << AverageWT_FCFS << endl;
+            cout << right << setw(30) << "平均周转时间:" << AverageWT << endl;
 
-            cout << "带权周转时间";
+            cout << left << setw(15) << "带权周转时间";
             for (int i = 1; i <= n; i++) {
-                cout << setw(10) << WeightWholeTime[i] << " ";
+                cout << right << setw(10) << WeightWholeTime[i];
             }
-            cout << setw(10) << "平均带权周转时间:" << AverageWWT_FCFS << endl;
+            cout << right << setw(30) << "平均带权周转时间:" << AverageWWT << endl;
         }
     }
 };
@@ -287,8 +279,10 @@ int main() {
     }
 
     //输出调度过程
-    timeCal.PrintAttemper();
+    timeCal.PrintSchedule();
 
     //输出周转时间、带权周转时间、平均周转时间及带权平均周转时间
     timeCal.Print();
+
+    return 0;
 }
