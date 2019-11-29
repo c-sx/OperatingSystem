@@ -4,4 +4,4 @@ project(OperatingSystem)
 set(CMAKE_CXX_STANDARD 14)
 
 add_executable(OperatingSystem main.cpp)
-add_executable(csx chapter01.cpp)
+add_executable(csx chapter01.cpp chapter02.cpp)

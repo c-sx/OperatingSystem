@@ -1,4 +1,5 @@
 #include <iostream>
+#include <iomanip>
 
 using namespace std;
 #define MaxNum 100
@@ -228,75 +229,39 @@ public:
 
             cout << "进程名      ";
             for (int i = 1; i <= n; i++) {
-                if (0 <= i && i < 10) {
-                    cout << "  " << i << " ";
-                } else if (10 <= i && i < 100) {
-                    cout << " " << i << " ";
-                } else {
-                    cout << i << " ";
-                }
+                cout << setw(10) << i << " ";
             }
             cout << endl;
 
             cout << "到达时间    ";
             for (int i = 1; i <= n; i++) {
-                if (0 <= ArrivalTime[i] && ArrivalTime[i] < 10) {
-                    cout << "  " << ArrivalTime[i] << " ";
-                } else if (10 <= ArrivalTime[i] && ArrivalTime[i] < 100) {
-                    cout << " " << ArrivalTime[i] << " ";
-                } else {
-                    cout << ArrivalTime[i] << " ";
-                }
+                cout << setw(10) << ArrivalTime[i] << " ";
             }
             cout << endl;
 
             cout << "服务时间    ";
             for (int i = 1; i <= n; i++) {
-                if (0 <= ServiceTime[i] && ServiceTime[i] < 10) {
-                    cout << "  " << ServiceTime[i] << " ";
-                } else if (10 <= ServiceTime[i] && ServiceTime[i] < 100) {
-                    cout << " " << ServiceTime[i] << " ";
-                } else {
-                    cout << ServiceTime[i] << " ";
-                }
+                cout << setw(10) << ServiceTime[i] << " ";
             }
             cout << endl;
 
             cout << "完成时间    ";
             for (int i = 1; i <= n; i++) {
-                if (0 <= FinishTime[i] && FinishTime[i] < 10) {
-                    cout << "  " << FinishTime[i] << " ";
-                } else if (10 <= FinishTime[i] && FinishTime[i] < 100) {
-                    cout << " " << FinishTime[i] << " ";
-                } else {
-                    cout << FinishTime[i] << " ";
-                }
+                cout << setw(10) << FinishTime[i] << " ";
             }
             cout << endl;
 
             cout << "周转时间    ";
             for (int i = 1; i <= n; i++) {
-                if (0 <= WholeTime[i] && WholeTime[i] < 10) {
-                    cout << "  " << WholeTime[i] << " ";
-                } else if (10 <= WholeTime[i] && WholeTime[i] < 100) {
-                    cout << " " << WholeTime[i] << " ";
-                } else {
-                    cout << WholeTime[i] << " ";
-                }
+                cout << setw(10) << WholeTime[i] << " ";
             }
-            cout << "平均周转时间:" << AverageWT_FCFS << endl;
+            cout << setw(10) << "平均周转时间:" << AverageWT_FCFS << endl;
 
             cout << "带权周转时间";
             for (int i = 1; i <= n; i++) {
-                if (0 <= WeightWholeTime[i] && WeightWholeTime[i] < 10) {
-                    cout << "  " << WeightWholeTime[i] << " ";
-                } else if (10 <= WeightWholeTime[i] && WeightWholeTime[i] < 100) {
-                    cout << " " << WeightWholeTime[i] << " ";
-                } else {
-                    cout << WeightWholeTime[i] << " ";
-                }
+                cout << setw(10) << WeightWholeTime[i] << " ";
             }
-            cout << "平均带权周转时间:" << AverageWWT_FCFS << endl;
+            cout << setw(10) << "平均带权周转时间:" << AverageWWT_FCFS << endl;
         }
     }
 };
