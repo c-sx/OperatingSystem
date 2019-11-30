@@ -13,13 +13,13 @@ public:
     int q{};//时间片大小
     int ArrivalTime[MaxNum]{};//进程到达时间T[i]
     int ServiceTime[MaxNum]{};//进程服务时间S[i]
-    int PServiceTime[MaxNum]{};//剩余进程服务时间P[i]
+/*    int PServiceTime[MaxNum]{};//剩余进程服务时间P[i]
     int FinishTime[MaxNum]{};//完成时间
     int WholeTime[MaxNum]{};//周转时间
-    double WeightWholeTime[MaxNum]{};//带权周转时间
-    double AverageWT{};//平均周转时间
-    double AverageWWT{};//平均带权周转时间
-    bool Finished[MaxNum]{};//完成状态
+    double WeightWholeTime[MaxNum]{};//带权周转时间*/
+    double AverageWT = 0;//平均周转时间
+    double AverageWWT = 0;//平均带权周转时间
+//    bool Finished[MaxNum]{};//完成状态
 
     typedef struct {
         int number;
@@ -29,7 +29,7 @@ public:
         int FinishedTime;//完成时间
         int WholeTime;//周转时间
         double WeightWholeTime;//带权周转时间
-        bool Finished[MaxNum];//完成状态
+        bool Finished;//完成状态
     } Progress;
 
     queue<Progress> queueRR;
@@ -56,62 +56,62 @@ public:
             progress[i].ArrivalTime = ArrivalTime[i];
             progress[i].ServiceTime = ServiceTime[i];
             progress[i].PServiceTime = progress[i].ServiceTime;
+            progress[i].Finished = false;
+            progress[i].FinishedTime = -1;
             queueRR.push(progress[i]);
         }
     }
 
     //调用RR算法进行调度计算
     void ArithRR() {
-
-    }
-
-    //输出调度过程
-    void PrintSchedule() {
-        int temp = 0;
-        int CopyFinishTime[MaxNum];//备份服务时间
-
-        //初始化CopyServiceTime
-        for (int i = 1; i <= n; i++) {
-            CopyFinishTime[i] = FinishTime[i];
-        }
-
-        if (FinishTime[1] >= 0)//判断是否已有数据输入
-            //根据完成时间排序输出
-            for (int i = 1; i <= n; i++) {
-
-                if (i != 1) {
-                    for (int j = 1; j <= n; j++) {
-                        if (temp != 0) {
-                            if (CopyFinishTime[j] > 0) {
-                                temp = (CopyFinishTime[temp] < CopyFinishTime[j] ? temp : j);
-                            }
-                        } else {
-                            if (CopyFinishTime[j] > 0) {
-                                temp = j;
-                            }
-                        }
-                    }
-                    if (i != 2) { cout << "进程" << temp << "开始运行" << endl; }
-                    cout << "时刻" << FinishTime[temp] + 1;
-                    if (i == n) {
-                        for (int j = 1; j < n; j++) {
-                            if (CopyFinishTime[j] > 0) {
-                                temp = j;
-                            }
-                        }
-                        cout << "进程" << temp << "开始运行" << endl << endl;
-                    }
-                    CopyFinishTime[temp] = -1;
-                    temp = 0;
+        int finishTime = 0;
+        while (!queueRR.empty()) {
+            //按进程顺序读取队列首值进行操作，并出队列，判断其是否完成，若无，则插入队列尾，并在执行过程中输出调度过程
+            int x = queueRR.front().number;
+            if (progress[x].PServiceTime > q) {//进程未结束
+                if (finishTime != 0) {
+                    cout << "时刻" << finishTime + 1 << "进程" << x << "开始运行" << endl;
                 } else {
-                    cout << "时刻0进程" << i << "开始运行" << endl;
+                    cout << "时刻" << finishTime << "进程" << x << "开始运行" << endl;
                 }
+                finishTime += q;
+                progress[x].PServiceTime -= q;
+                queueRR.pop();
+                queueRR.push(progress[x]);
+            } else {//进程结束
+                if (finishTime != 0) {
+                    cout << "时刻" << finishTime + 1 << "进程" << x << "开始运行" << endl;
+                } else {
+                    cout << "时刻" << finishTime << "进程" << x << "开始运行" << endl;
+                }
+                progress[x].Finished = true;
+                finishTime += progress[x].PServiceTime;
+                progress[x].PServiceTime = 0;
+                progress[x].FinishedTime = finishTime;
+                cout << "时刻" << finishTime << "进程" << x << "结束运行" << endl;
+                queueRR.pop();
             }
+
+            //计算属性
+            for (int i = 1; i <= n; i++) {
+                //计算周转时间
+                progress[i].WholeTime = progress[i].FinishedTime - progress[i].ArrivalTime;
+
+                //计算带权周转时间
+                progress[i].WeightWholeTime = (double) progress[i].WholeTime / progress[i].ServiceTime;
+
+                //计算平均周转时间
+                AverageWT += progress[i].WholeTime;
+
+                //计算平局带权周转时间
+                AverageWWT += progress[i].WeightWholeTime;
+            }
+        }
     }
 
     //输出周转时间、带权周转时间、平均周转时间及带权平均周转时间
     void Print() {
-        if (FinishTime[1] >= 0)//判断是否已有数据输入
+        if (progress[1].FinishedTime >= 0)//判断是否已有数据输入
         {
             cout << left << setw(15) << "周转信息如下表：" << endl;
 
@@ -160,6 +160,7 @@ int main() {
     RRSchedule rrSchedule;
     rrSchedule.InputProcess();
     rrSchedule.InitQueue();
-
+    rrSchedule.ArithRR();
+    rrSchedule.Print();
     return 0;
 }
