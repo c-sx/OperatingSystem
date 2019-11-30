@@ -12,14 +12,10 @@ public:
     int q{};//时间片大小
     int ArrivalTime[MaxNum]{};//进程到达时间T[i]
     int ServiceTime[MaxNum]{};//进程服务时间S[i]
-/*    int PServiceTime[MaxNum]{};//剩余进程服务时间P[i]
-    int FinishTime[MaxNum]{};//完成时间
-    int WholeTime[MaxNum]{};//周转时间
-    double WeightWholeTime[MaxNum]{};//带权周转时间*/
     double AverageWT = 0;//平均周转时间
     double AverageWWT = 0;//平均带权周转时间
-//    bool Finished[MaxNum]{};//完成状态
 
+    //定义进程的数据结构
     typedef struct {
         int number;
         int ArrivalTime;//进程到达时间
