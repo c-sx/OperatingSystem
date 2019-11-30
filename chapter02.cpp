@@ -1,7 +1,6 @@
 #include <iostream>
 #include <queue>
 #include <iomanip>
-#include <fstream>
 
 using namespace std;
 #define MaxNum 100
@@ -69,21 +68,13 @@ public:
             //按进程顺序读取队列首值进行操作，并出队列，判断其是否完成，若无，则插入队列尾，并在执行过程中输出调度过程
             int x = queueRR.front().number;
             if (progress[x].PServiceTime > q) {//进程未结束
-                if (finishTime != 0) {
-                    cout << "时刻" << finishTime + 1 << "进程" << x << "开始运行" << endl;
-                } else {
-                    cout << "时刻" << finishTime << "进程" << x << "开始运行" << endl;
-                }
+                cout << "时刻" << finishTime + 1 << "进程" << x << "开始运行" << endl;
                 finishTime += q;
                 progress[x].PServiceTime -= q;
                 queueRR.pop();
                 queueRR.push(progress[x]);
             } else {//进程结束
-                if (finishTime != 0) {
-                    cout << "时刻" << finishTime + 1 << "进程" << x << "开始运行" << endl;
-                } else {
-                    cout << "时刻" << finishTime << "进程" << x << "开始运行" << endl;
-                }
+                cout << "时刻" << finishTime + 1 << "进程" << x << "开始运行" << endl;
                 progress[x].Finished = true;
                 finishTime += progress[x].PServiceTime;
                 progress[x].PServiceTime = 0;
@@ -91,22 +82,28 @@ public:
                 cout << "时刻" << finishTime << "进程" << x << "结束运行" << endl;
                 queueRR.pop();
             }
-
-            //计算属性
-            for (int i = 1; i <= n; i++) {
-                //计算周转时间
-                progress[i].WholeTime = progress[i].FinishedTime - progress[i].ArrivalTime;
-
-                //计算带权周转时间
-                progress[i].WeightWholeTime = (double) progress[i].WholeTime / progress[i].ServiceTime;
-
-                //计算平均周转时间
-                AverageWT += progress[i].WholeTime;
-
-                //计算平局带权周转时间
-                AverageWWT += progress[i].WeightWholeTime;
-            }
         }
+
+        //计算属性
+        for (int i = 1; i <= n; i++) {
+            //计算周转时间
+            progress[i].WholeTime = progress[i].FinishedTime - progress[i].ArrivalTime;
+
+            //计算带权周转时间
+            progress[i].WeightWholeTime = (double) progress[i].WholeTime / progress[i].ServiceTime;
+
+            //计算平均周转时间
+            AverageWT += progress[i].WholeTime;
+
+            //计算平局带权周转时间
+            AverageWWT += progress[i].WeightWholeTime;
+        }
+
+        //计算平均周转时间
+        AverageWT /= (double) n;
+
+        //计算平局带权周转时间
+        AverageWWT /= (double) n;
     }
 
     //输出周转时间、带权周转时间、平均周转时间及带权平均周转时间
@@ -123,31 +120,31 @@ public:
 
             cout << left << setw(15) << "到达时间";
             for (int i = 1; i <= n; i++) {
-                cout << right << setw(10) << ArrivalTime[i];
+                cout << right << setw(10) << progress[i].ArrivalTime;
             }
             cout << endl;
 
             cout << left << setw(15) << "服务时间";
             for (int i = 1; i <= n; i++) {
-                cout << right << setw(10) << ServiceTime[i];
+                cout << right << setw(10) << progress[i].ServiceTime;
             }
             cout << endl;
 
             cout << left << setw(15) << "完成时间";
             for (int i = 1; i <= n; i++) {
-                cout << right << setw(10) << FinishTime[i];
+                cout << right << setw(10) << progress[i].FinishedTime;
             }
             cout << endl;
 
             cout << left << setw(15) << "周转时间";
             for (int i = 1; i <= n; i++) {
-                cout << right << setw(10) << WholeTime[i];
+                cout << right << setw(10) << progress[i].WholeTime;
             }
             cout << right << setw(30) << "平均周转时间:" << AverageWT << endl;
 
             cout << left << setw(15) << "带权周转时间";
             for (int i = 1; i <= n; i++) {
-                cout << right << setw(10) << WeightWholeTime[i];
+                cout << right << setw(10) << progress[i].WeightWholeTime;
             }
             cout << right << setw(30) << "平均带权周转时间:" << AverageWWT << endl;
         }
