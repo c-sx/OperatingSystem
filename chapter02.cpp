@@ -47,6 +47,7 @@ public:
         }
         cout << "请输入时间片大小：";
         cin >> q;
+        cout << endl;
     }
 
     void InitQueue() {
@@ -108,46 +109,43 @@ public:
 
     //输出周转时间、带权周转时间、平均周转时间及带权平均周转时间
     void Print() {
-        if (progress[1].FinishedTime >= 0)//判断是否已有数据输入
-        {
-            cout << left << setw(15) << "周转信息如下表：" << endl;
+        cout << endl << left << setw(15) << "周转信息如下表：" << endl;
 
-            cout << left << setw(15) << "";
-            for (int i = 1; i <= n; i++) {
-                cout << right << setw(10) << "进程" << i;
-            }
-            cout << endl;
-
-            cout << left << setw(15) << "到达时间";
-            for (int i = 1; i <= n; i++) {
-                cout << right << setw(10) << progress[i].ArrivalTime;
-            }
-            cout << endl;
-
-            cout << left << setw(15) << "服务时间";
-            for (int i = 1; i <= n; i++) {
-                cout << right << setw(10) << progress[i].ServiceTime;
-            }
-            cout << endl;
-
-            cout << left << setw(15) << "完成时间";
-            for (int i = 1; i <= n; i++) {
-                cout << right << setw(10) << progress[i].FinishedTime;
-            }
-            cout << endl;
-
-            cout << left << setw(15) << "周转时间";
-            for (int i = 1; i <= n; i++) {
-                cout << right << setw(10) << progress[i].WholeTime;
-            }
-            cout << right << setw(30) << "平均周转时间:" << AverageWT << endl;
-
-            cout << left << setw(15) << "带权周转时间";
-            for (int i = 1; i <= n; i++) {
-                cout << right << setw(10) << progress[i].WeightWholeTime;
-            }
-            cout << right << setw(30) << "平均带权周转时间:" << AverageWWT << endl;
+        cout << left << setw(15) << "";
+        for (int i = 1; i <= n; i++) {
+            cout << right << setw(10) << "进程" << i;
         }
+        cout << endl;
+
+        cout << left << setw(15) << "到达时间";
+        for (int i = 1; i <= n; i++) {
+            cout << right << setw(10) << progress[i].ArrivalTime;
+        }
+        cout << endl;
+
+        cout << left << setw(15) << "服务时间";
+        for (int i = 1; i <= n; i++) {
+            cout << right << setw(10) << progress[i].ServiceTime;
+        }
+        cout << endl;
+
+        cout << left << setw(15) << "完成时间";
+        for (int i = 1; i <= n; i++) {
+            cout << right << setw(10) << progress[i].FinishedTime;
+        }
+        cout << endl;
+
+        cout << left << setw(15) << "周转时间";
+        for (int i = 1; i <= n; i++) {
+            cout << right << setw(10) << progress[i].WholeTime;
+        }
+        cout << right << setw(30) << "平均周转时间:" << AverageWT << endl;
+
+        cout << left << setw(15) << "带权周转时间";
+        for (int i = 1; i <= n; i++) {
+            cout << right << setw(10) << progress[i].WeightWholeTime;
+        }
+        cout << right << setw(30) << "平均带权周转时间:" << AverageWWT << endl;
     }
 
 
