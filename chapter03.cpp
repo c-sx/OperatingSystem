@@ -7,11 +7,11 @@ using namespace std;
 class BankerAlgorithm {
 public:
 
-    int n{};//进程个数n
-    int m{};//资源种类m
-    int Available[MaxNumber]{};//可用资源数量
-    int Request[MaxNumber]{};//进程请求的资源数量
-    int SafeOrder[MaxNumber]{};//安全进程序列
+    int n;//进程个数n
+    int m;//资源种类m
+    int Available[MaxNumber];//可用资源数量
+    int Request[MaxNumber];//进程请求的资源数量
+    int SafeOrder[MaxNumber];//安全进程序列
 
     //定义进程的数据结构
     typedef struct {
@@ -21,7 +21,7 @@ public:
         bool Finished;//完成状态
     } Progress;
 
-    Progress progress[MaxNumber]{};
+    Progress progress[MaxNumber];
 
     //输入进程数、资源种类、各进程有关资源的Max、Allocation、Need数量
     void Input() {
@@ -58,7 +58,7 @@ public:
         //剩余资源数量参考
         cout << endl << "剩余资源情况为：";
         for (int i = 1; i <= m; i++) {
-            cout << setw(10) << "资源" << i << "剩余：" << a[i];
+            cout << setw(6) << "资源" << setw(2) << i << setw(6) << "剩余：" << setw(2) << a[i];
         }
 
         //判断新请求
@@ -104,6 +104,7 @@ public:
         for (int i = 1; i <= m; i++) {
             available[i] = a[i];
         }
+
         while (!NewFinish(progressCopy)) {//若有
             if (IsSafe(progressCopy, available)) {
                 for (int i = 1; i <= n; i++) {
@@ -125,7 +126,7 @@ public:
         //输出SafeOrder
         cout << "SafeOrder为：";
         for (int i = 1; i <= n; i++) {
-            cout << setw(10) << "进程" << SafeOrder[i];
+            cout << setw(12) << "进程" << setw(4) << SafeOrder[i];
         }
 
         NewRequest(pg, a);
@@ -163,7 +164,7 @@ public:
 };
 
 int main() {
-    BankerAlgorithm bankerAlgorithm;
+    BankerAlgorithm bankerAlgorithm{};
     bankerAlgorithm.Input();
     bankerAlgorithm.Order(bankerAlgorithm.progress, bankerAlgorithm.Available);
 

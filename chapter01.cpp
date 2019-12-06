@@ -7,15 +7,15 @@ using namespace std;
 class TimeCal {
 public:
 
-    int n{};//进程数
-    int ArrivalTime[MaxNum]{};//进程到达时间T[i]
-    int ServiceTime[MaxNum]{};//进程服务时间S[i]
-    int FinishTime[MaxNum]{};//完成时间
-    int WholeTime[MaxNum]{};//周转时间
-    double WeightWholeTime[MaxNum]{};//带权周转时间
+    int n;//进程数
+    int ArrivalTime[MaxNum];//进程到达时间T[i]
+    int ServiceTime[MaxNum];//进程服务时间S[i]
+    int FinishTime[MaxNum];//完成时间
+    int WholeTime[MaxNum];//周转时间
+    double WeightWholeTime[MaxNum];//带权周转时间
     double AverageWT = 0;//平均周转时间
     double AverageWWT = 0;//平均带权周转时间
-    int isArith{};//进程算法输入值，用于验证输入,1为FCFS，2为SJF
+    int isAlgorithm;//进程算法输入值，用于验证输入,1为FCFS，2为SJF
 
     //输入进程信息
     //将输入的ArrivalTime信息与ServiceTime信息存储进数组
@@ -31,26 +31,26 @@ public:
     }
 
     //获取算法选择输入
-    void InputArith() {
+    void InputAlgorithm() {
         cout << endl << "请选择想要先使用的算法（1-FCFS，2-SJF)：";
-        cin >> isArith;
-        IsArith();
+        cin >> isAlgorithm;
+        IsAlgorithm();
     }
 
     //算法存储
-    void IsArith() {
-        if (isArith == 1) {
+    void IsAlgorithm() {
+        if (isAlgorithm == 1) {
             cout << endl << "您选择的是1-FCFS算法" << endl;
-        } else if (isArith == 2) {
+        } else if (isAlgorithm == 2) {
             cout << endl << "您选择的是2-SJF算法" << endl;
         } else {
-            cout << "算法值" << isArith << "有误,请重新输入正确的算法类型（1-FCFS，2-SJF）" << endl;
-            InputArith();
+            cout << "算法值" << isAlgorithm << "有误,请重新输入正确的算法类型（1-FCFS，2-SJF）" << endl;
+            InputAlgorithm();
         }
     }
 
     //调用FCFS算法进行调度计算
-    void ArithFCFS() {
+    void AlgorithmFCFS() {
 
         //初始化FinishTime[0]
         FinishTime[0] = 0;
@@ -76,7 +76,7 @@ public:
     }
 
     //调用SJF算法进行调度计算
-    void ArithSJF() {
+    void AlgorithmSJF() {
 
         int QueueServiceTime[MaxNum];//排序服务时间
         int CopyServiceTime[MaxNum];//备份服务时间
@@ -221,7 +221,7 @@ public:
 
             cout << left << setw(15) << "";
             for (int i = 1; i <= n; i++) {
-                cout << right << setw(10) << "进程" << i;
+                cout << right << setw(8) << "进程" << setw(2) << i;
             }
             cout << endl;
 
@@ -247,13 +247,13 @@ public:
             for (int i = 1; i <= n; i++) {
                 cout << right << setw(10) << WholeTime[i];
             }
-            cout << right << setw(30) << "平均周转时间:" << AverageWT << endl;
+            cout << right << setw(20) << "平均周转时间:" << setw(10) << AverageWT << endl;
 
             cout << left << setw(15) << "带权周转时间";
             for (int i = 1; i <= n; i++) {
                 cout << right << setw(10) << WeightWholeTime[i];
             }
-            cout << right << setw(30) << "平均带权周转时间:" << AverageWWT << endl;
+            cout << right << setw(20) << "平均带权周转时间:" << setw(10) << AverageWWT << endl;
         }
     }
 };
@@ -261,21 +261,21 @@ public:
 
 int main() {
     //创建TimeCal类
-    TimeCal timeCal;
+    TimeCal timeCal{};
 
     //输入进程信息
     //将输入的ArrivalTime信息与ServiceTime信息存储进数组
     timeCal.InputProcess();
 
     //获取算法选择输入
-    timeCal.InputArith();
+    timeCal.InputAlgorithm();
 
-    if (timeCal.isArith == 1)    //调用FCFS算法进行调度计算
+    if (timeCal.isAlgorithm == 1)    //调用FCFS算法进行调度计算
     {
-        timeCal.ArithFCFS();
+        timeCal.AlgorithmFCFS();
     } else//调用SJF算法进行调度计算
     {
-        timeCal.ArithSJF();
+        timeCal.AlgorithmSJF();
     }
 
     //输出调度过程

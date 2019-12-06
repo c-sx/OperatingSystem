@@ -8,10 +8,10 @@ using namespace std;
 class RRSchedule {
 public:
 
-    int n{};//进程数
-    int q{};//时间片大小
-    int ArrivalTime[MaxNum]{};//进程到达时间T[i]
-    int ServiceTime[MaxNum]{};//进程服务时间S[i]
+    int n;//进程数
+    int q;//时间片大小
+    int ArrivalTime[MaxNum];//进程到达时间T[i]
+    int ServiceTime[MaxNum];//进程服务时间S[i]
     double AverageWT = 0;//平均周转时间
     double AverageWWT = 0;//平均带权周转时间
 
@@ -28,7 +28,7 @@ public:
     } Progress;
 
     queue<Progress> queueRR;
-    Progress progress[MaxNum]{};
+    Progress progress[MaxNum];
 
     //输入进程信息
     //将输入的ArrivalTime信息与ServiceTime信息存储进数组
@@ -59,7 +59,7 @@ public:
     }
 
     //调用RR算法进行调度计算
-    void ArithRR() {
+    void AlgorithmRR() {
         int finishTime = 0;
         while (!queueRR.empty()) {
             //按进程顺序读取队列首值进行操作，并出队列，判断其是否完成，若无，则插入队列尾，并在执行过程中输出调度过程
@@ -109,7 +109,7 @@ public:
 
         cout << left << setw(15) << "";
         for (int i = 1; i <= n; i++) {
-            cout << right << setw(10) << "进程" << i;
+            cout << right << setw(8) << "进程" << setw(2) << i;
         }
         cout << endl;
 
@@ -148,10 +148,10 @@ public:
 };
 
 int main() {
-    RRSchedule rrSchedule;
+    RRSchedule rrSchedule{};
     rrSchedule.InputProcess();
     rrSchedule.InitQueue();
-    rrSchedule.ArithRR();
+    rrSchedule.AlgorithmRR();
     rrSchedule.Print();
     return 0;
 }
