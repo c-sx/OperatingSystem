@@ -17,7 +17,7 @@ public:
 
     //定义进程的数据结构
     typedef struct {
-        int number;
+        int index;
         int ArrivalTime;//进程到达时间
         int ServiceTime;//进程服务时间
         int PServiceTime;//剩余进程服务时间P[i]
@@ -48,7 +48,7 @@ public:
 
     void InitQueue() {
         for (int i = 1; i <= n; i++) {
-            progress[i].number = i;
+            progress[i].index = i;
             progress[i].ArrivalTime = ArrivalTime[i];
             progress[i].ServiceTime = ServiceTime[i];
             progress[i].PServiceTime = progress[i].ServiceTime;
@@ -63,7 +63,7 @@ public:
         int finishTime = 0;
         while (!queueRR.empty()) {
             //按进程顺序读取队列首值进行操作，并出队列，判断其是否完成，若无，则插入队列尾，并在执行过程中输出调度过程
-            int x = queueRR.front().number;
+            int x = queueRR.front().index;
             if (progress[x].PServiceTime > q) {//进程未结束
                 cout << "时刻" << finishTime + 1 << "进程" << x << "开始运行" << endl;
                 finishTime += q;
