@@ -1,5 +1,6 @@
 #include <iostream>
 #include <iomanip>
+#include <climits>
 
 using namespace std;
 #define MaxNumber 100
@@ -53,10 +54,10 @@ public:
     //获取算法选择输入
     void InputAlgorithm() {
         cout << endl
-             << "请选择想要先使用的算法（ 1-FCFS，2-SSTF，3-SCAN，4-循环SCAN ：";
+             << "请选择想要先使用的算法（ 1-FCFS，2-SSTF，3-SCAN，4-循环SCAN )：";
         cin >> isAlgorithm;
 
-        if (isAlgorithm != 1) {
+        if (isAlgorithm == 3 && isAlgorithm == 4) {
             cout << "请输入磁头移动方向direction（!0为向外，0为向内）：";
             cin >> direction;
         }
@@ -99,6 +100,12 @@ public:
         if (isAlgorithm != 1 && isAlgorithm != 2 && isAlgorithm != 3 && isAlgorithm != 4) {
             return;
         }
+
+        if (isAlgorithm == 3 && isAlgorithm == 4) {
+            cout << "请输入磁头移动方向direction（!0为向外，0为向内）：";
+            cin >> direction;
+        }
+
         IsAlgorithm();
     }
 
@@ -110,8 +117,8 @@ public:
         for (int i = 1; i <= TrackNum; i++) {
             cout << "当前磁道为：" << right << setw(3) << simulate[i].TrackIndex << "，下一磁道为：" << right << setw(3)
                  << simulate[i].TrackNext << "，寻道方向：" << (simulate[i].Direction ? "向外" : "向内") << "，寻道距离为："
-                 << simulate[i].MoveDistance << "，至此平均寻道距离为：" << fixed << setprecision(2) << simulate[i].AverageDistance
-                 << endl;
+                 << setw(3) << simulate[i].MoveDistance << "，至此平均寻道距离为：" << fixed << setprecision(2)
+                 << simulate[i].AverageDistance << endl;
         }
 
         cout << endl << "输出磁盘调度算法模拟表格如下：" << endl;
@@ -181,22 +188,32 @@ public:
 
     //调用最短寻道时间优先SSTF算法进行调度计算
     void AlgorithmSSTF() {
+        //复制空闲分区
+        int TrackOrderCopy[MaxNumber];//复制TrackOrder
+        for (int i = 1; i <= TrackNum; i++) {
+            TrackOrderCopy[i] = TrackOrder[i];
+        }
 
         for (int i = 1; i <= TrackNum; i++) {
 
             //计算当前磁道到其它磁道的移动距离
+            cout << "第" << i << "次计算" << endl;
             for (int j = 1; j <= TrackNum; j++) {
-                distance[j].TrackIndex = TrackOrder[j];
+                distance[j].TrackIndex = TrackOrderCopy[j];
                 if (i == 1) {
                     distance[j].MoveDistance =
-                            StartTrack > TrackOrder[j] ? StartTrack - TrackOrder[j] : TrackOrder[j] - StartTrack;
-                } else if (i == j) {
-                    distance[j].MoveDistance = MaxNumber;
+                            StartTrack > TrackOrderCopy[j] ? StartTrack - TrackOrderCopy[j] : TrackOrderCopy[j] -
+                                                                                              StartTrack;
+                } else if (simulate[i - 1].TrackNext == distance[j].TrackIndex) {
+                    distance[j].MoveDistance = INT_MAX;
+                    TrackOrderCopy[j] = INT_MAX;
                 } else {
                     distance[j].MoveDistance =
-                            TrackOrder[i] > TrackOrder[j] ? TrackOrder[i] - TrackOrder[j] : TrackOrder[j] -
-                                                                                            TrackOrder[i];
+                            simulate[i - 1].TrackNext > TrackOrderCopy[j] ? simulate[i - 1].TrackNext -
+                                                                            TrackOrderCopy[j] :
+                            TrackOrderCopy[j] - simulate[i - 1].TrackNext;
                 }
+                cout << distance[j].TrackIndex << " " << distance[j].MoveDistance << " " << endl;
             }
 
             //按MoveDistance从小到大冒泡排序Distance序列
@@ -204,11 +221,17 @@ public:
                 for (int k = 1; k <= TrackNum - j; k++) {
                     if (distance[k].MoveDistance > distance[k + 1].MoveDistance) {
                         Distance temp = distance[k];
-                        distance[k].MoveDistance = distance[k + 1].MoveDistance;
+                        distance[k] = distance[k + 1];
                         distance[k + 1] = temp;
                     }
                 }
             }
+
+            cout << "第" << i << "次冒泡" << endl;
+            for (int j = 1; j <= TrackNum; j++) {
+                cout << distance[j].TrackIndex << " " << distance[j].MoveDistance << endl;
+            }
+
 
             //xie写入simulate模拟数组
             if (i == 1) {
@@ -225,6 +248,7 @@ public:
             simulate[i].AverageDistance = ((simulate[i - 1].AverageDistance * (double) (i - 1) / (double) i) +
                                            ((double) simulate[i].MoveDistance / (double) i));
             simulate[i].TrackNext = distance[1].TrackIndex;
+
         }
 
         Print();
