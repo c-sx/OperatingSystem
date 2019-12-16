@@ -26,6 +26,14 @@ public:
 
     Simulate simulate[MaxNumber];
 
+    //定义移动距离数据结构
+    typedef struct {
+        int TrackIndex;//磁道
+        int MoveDistance;//磁头移动距离
+    } Distance;
+
+    Distance distance[MaxNumber];
+
     //输入空闲分区数、空闲的分区大小、进程数、进程需要的分区大小
     void Input() {
         cout << "请输入磁道个数TrackNum：";
@@ -108,32 +116,32 @@ public:
 
         cout << endl << "输出磁盘调度算法模拟表格如下：" << endl;
         //模拟过程
-        cout << left << setw(15) << "";
+        cout << endl << left << setw(15) << "";
         for (int i = 1; i <= TrackNum; i++) {
             cout << right << setw(12) << "Simulate" << setw(3) << i;
         }
 
-        cout << left << setw(15) << "TrackIndex";
+        cout << endl << left << setw(15) << "TrackIndex";
         for (int i = 1; i <= TrackNum; i++) {
             cout << right << setw(15) << simulate[i].TrackIndex;
         }
 
-        cout << left << setw(15) << "TrackNext";
+        cout << endl << left << setw(15) << "TrackNext";
         for (int i = 1; i <= TrackNum; i++) {
             cout << right << setw(15) << simulate[i].TrackNext;
         }
 
-        cout << left << setw(15) << "Direction";
+        cout << endl << left << setw(15) << "Direction";
         for (int i = 1; i <= TrackNum; i++) {
             cout << right << setw(15) << (simulate[i].Direction ? "Outward" : "Inward");
         }
 
-        cout << left << setw(15) << "MoveDistance";
+        cout << endl << left << setw(15) << "MoveDistance";
         for (int i = 1; i <= TrackNum; i++) {
             cout << right << setw(15) << simulate[i].MoveDistance;
         }
 
-        cout << left << setw(15) << "AverageDistance";
+        cout << endl << left << setw(15) << "AverageDistance";
         for (int i = 1; i <= TrackNum; i++) {
             cout << right << setw(15) << setprecision(2) << simulate[i].AverageDistance;
         }
@@ -173,6 +181,51 @@ public:
 
     //调用最短寻道时间优先SSTF算法进行调度计算
     void AlgorithmSSTF() {
+
+        for (int i = 1; i <= TrackNum; i++) {
+
+            //计算当前磁道到其它磁道的移动距离
+            for (int j = 1; j <= TrackNum; j++) {
+                distance[j].TrackIndex = TrackOrder[j];
+                if (i == 1) {
+                    distance[j].MoveDistance =
+                            StartTrack > TrackOrder[j] ? StartTrack - TrackOrder[j] : TrackOrder[j] - StartTrack;
+                } else if (i == j) {
+                    distance[j].MoveDistance = MaxNumber;
+                } else {
+                    distance[j].MoveDistance =
+                            TrackOrder[i] > TrackOrder[j] ? TrackOrder[i] - TrackOrder[j] : TrackOrder[j] -
+                                                                                            TrackOrder[i];
+                }
+            }
+
+            //按MoveDistance从小到大冒泡排序Distance序列
+            for (int j = 1; j <= TrackNum; j++) {
+                for (int k = 1; k <= TrackNum - j; k++) {
+                    if (distance[k].MoveDistance > distance[k + 1].MoveDistance) {
+                        Distance temp = distance[k];
+                        distance[k].MoveDistance = distance[k + 1].MoveDistance;
+                        distance[k + 1] = temp;
+                    }
+                }
+            }
+
+            //xie写入simulate模拟数组
+            if (i == 1) {
+                simulate[i].TrackIndex = StartTrack;
+                simulate[i].Direction = (simulate[i].TrackIndex < distance[1].TrackIndex);
+                simulate[i].MoveDistance = distance[1].MoveDistance;
+                simulate[i].AverageDistance = simulate[i].MoveDistance;
+                simulate[i].TrackNext = distance[1].TrackIndex;
+                continue;
+            }
+            simulate[i].TrackIndex = simulate[i - 1].TrackNext;
+            simulate[i].Direction = (simulate[i].TrackIndex < distance[1].TrackIndex);
+            simulate[i].MoveDistance = distance[1].MoveDistance;
+            simulate[i].AverageDistance = ((simulate[i - 1].AverageDistance * (double) (i - 1) / (double) i) +
+                                           ((double) simulate[i].MoveDistance / (double) i));
+            simulate[i].TrackNext = distance[1].TrackIndex;
+        }
 
         Print();
 
