@@ -7,35 +7,35 @@ using namespace std;
 class BankerAlgorithm {
 public:
 
-    int n;//½ø³Ì¸öÊın
-    int m;//×ÊÔ´ÖÖÀàm
-    int Available[MaxNumber];//¿ÉÓÃ×ÊÔ´ÊıÁ¿
-    int Request[MaxNumber];//½ø³ÌÇëÇóµÄ×ÊÔ´ÊıÁ¿
-    int SafeOrder[MaxNumber];//°²È«½ø³ÌĞòÁĞ
+    int n;//è¿›ç¨‹ä¸ªæ•°n
+    int m;//èµ„æºç§ç±»m
+    int Available[MaxNumber];//å¯ç”¨èµ„æºæ•°é‡
+    int Request[MaxNumber];//è¿›ç¨‹è¯·æ±‚çš„èµ„æºæ•°é‡
+    int SafeOrder[MaxNumber];//å®‰å…¨è¿›ç¨‹åºåˆ—
 
-    //¶¨Òå½ø³ÌµÄÊı¾İ½á¹¹
+    //å®šä¹‰è¿›ç¨‹çš„æ•°æ®ç»“æ„
     typedef struct {
         int Max[MaxNumber];
         int Allocation[MaxNumber];
         int Need[MaxNumber];
-        bool Finished;//Íê³É×´Ì¬
+        bool Finished;//å®ŒæˆçŠ¶æ€
     } Progress;
 
     Progress progress[MaxNumber];
 
-    //ÊäÈë½ø³ÌÊı¡¢×ÊÔ´ÖÖÀà¡¢¸÷½ø³ÌÓĞ¹Ø×ÊÔ´µÄMax¡¢Allocation¡¢NeedÊıÁ¿
+    //è¾“å…¥è¿›ç¨‹æ•°ã€èµ„æºç§ç±»ã€å„è¿›ç¨‹æœ‰å…³èµ„æºçš„Maxã€Allocationã€Needæ•°é‡
     void Input() {
-        cout << "ÇëÊäÈë½ø³Ì¸öÊın£º";
+        cout << "è¯·è¾“å…¥è¿›ç¨‹ä¸ªæ•°nï¼š";
         cin >> n;
-        cout << "ÇëÊäÈë×ÊÔ´ÖÖÀàm£º";
+        cout << "è¯·è¾“å…¥èµ„æºç§ç±»mï¼š";
         cin >> m;
         for (int i = 1; i <= n; i++) {
             for (int j = 1; j <= m; j++) {
-                cout << "ÇëÊäÈë½ø³Ì" << i << "µÄ×ÊÔ´" << j << "µÄ×î´óÔÊĞíÊıÁ¿Max[" << j << "]£º";
+                cout << "è¯·è¾“å…¥è¿›ç¨‹" << i << "çš„èµ„æº" << j << "çš„æœ€å¤§å…è®¸æ•°é‡Max[" << j << "]ï¼š";
                 cin >> progress[i].Max[j];
             }
             for (int j = 1; j <= m; j++) {
-                cout << "ÇëÊäÈë½ø³Ì" << i << "µÄ×ÊÔ´" << j << "µÄÒÑ·ÖÅäÊıÁ¿Allocation[" << j << "]£º";
+                cout << "è¯·è¾“å…¥è¿›ç¨‹" << i << "çš„èµ„æº" << j << "çš„å·²åˆ†é…æ•°é‡Allocation[" << j << "]ï¼š";
                 cin >> progress[i].Allocation[j];
             }
             for (int j = 1; j <= m; j++) {
@@ -44,36 +44,36 @@ public:
         }
 
         for (int i = 1; i <= m; i++) {
-            cout << "ÇëÊäÈë¿ÉÓÃ×ÊÔ´" << i << "µÄ¿ÉÓÃÊıÁ¿£º";
+            cout << "è¯·è¾“å…¥å¯ç”¨èµ„æº" << i << "çš„å¯ç”¨æ•°é‡ï¼š";
             cin >> Available[i];
         }
 
         cout << endl;
     }
 
-    //ÅĞ¶ÏÊÇ·ñÓĞĞÂÇëÇó£¬ÈôÎŞÔòÍË³ö£¬ÈôÓĞÔòÊäÈëÆäÇëÇó×ÊÔ´Êı
+    //åˆ¤æ–­æ˜¯å¦æœ‰æ–°è¯·æ±‚ï¼Œè‹¥æ— åˆ™é€€å‡ºï¼Œè‹¥æœ‰åˆ™è¾“å…¥å…¶è¯·æ±‚èµ„æºæ•°
     void NewRequest(Progress pg[MaxNumber], int a[MaxNumber]) {
         int newRequest;
 
-        //Ê£Óà×ÊÔ´ÊıÁ¿²Î¿¼
-        cout << endl << "Ê£Óà×ÊÔ´Çé¿öÎª£º";
+        //å‰©ä½™èµ„æºæ•°é‡å‚è€ƒ
+        cout << endl << "å‰©ä½™èµ„æºæƒ…å†µä¸ºï¼š";
         for (int i = 1; i <= m; i++) {
-            cout << setw(6) << "×ÊÔ´" << setw(2) << i << setw(6) << "Ê£Óà£º" << setw(2) << a[i];
+            cout << setw(6) << "èµ„æº" << setw(2) << i << setw(6) << "å‰©ä½™ï¼š" << setw(2) << a[i];
         }
 
-        //ÅĞ¶ÏĞÂÇëÇó
-        cout << endl << "ÊÇ·ñ»¹ÓĞĞÂÇëÇó,ÈôÓĞÇëÊäÈë½ø³ÌĞòºÅ£¬ÈôÎŞÇëÊäÈë0£º";
+        //åˆ¤æ–­æ–°è¯·æ±‚
+        cout << endl << "æ˜¯å¦è¿˜æœ‰æ–°è¯·æ±‚,è‹¥æœ‰è¯·è¾“å…¥è¿›ç¨‹åºå·ï¼Œè‹¥æ— è¯·è¾“å…¥0ï¼š";
         cin >> newRequest;
         if (newRequest != 0) {
             for (int i = 1; i <= m; i++) {
-                cout << "ÇëÊäÈë½ø³Ì" << newRequest << "ĞèÇóµÄ×ÊÔ´" << i << "µÄÊıÁ¿:";
+                cout << "è¯·è¾“å…¥è¿›ç¨‹" << newRequest << "éœ€æ±‚çš„èµ„æº" << i << "çš„æ•°é‡:";
                 cin >> Request[i];
                 if (Request[i] > a[i]) {
-                    cout << "¿É·ÖÅä×ÊÔ´²»×ã£¬ÇëÖØĞÂÊäÈë" << endl;
+                    cout << "å¯åˆ†é…èµ„æºä¸è¶³ï¼Œè¯·é‡æ–°è¾“å…¥" << endl;
                     NewRequest(pg, a);
                 }
                 if (Request[i] > pg[newRequest].Need[i]) {
-                    cout << "³¬³öĞèÇó£¬ÇëÖØĞÂÊäÈë" << endl;
+                    cout << "è¶…å‡ºéœ€æ±‚ï¼Œè¯·é‡æ–°è¾“å…¥" << endl;
                     NewRequest(pg, a);
                 }
             }
@@ -90,26 +90,26 @@ public:
     }
 
     void Order(Progress pg[MaxNumber], int a[MaxNumber]) {
-        //¶¨ÒåÏÂ±êÊı
+        //å®šä¹‰ä¸‹æ ‡æ•°
         int orderNum = 0;
 
-        //¸´ÖÆ½ø³Ì²Ù×÷
+        //å¤åˆ¶è¿›ç¨‹æ“ä½œ
         Progress progressCopy[MaxNumber];
         for (int i = 1; i <= n; i++) {
             progressCopy[i] = pg[i];
         }
 
-        //¸´ÖÆ¿ÉÓÃĞèÇóÊı
+        //å¤åˆ¶å¯ç”¨éœ€æ±‚æ•°
         int available[MaxNumber];
         for (int i = 1; i <= m; i++) {
             available[i] = a[i];
         }
 
-        while (!NewFinish(progressCopy)) {//ÈôÓĞ
+        while (!NewFinish(progressCopy)) {//è‹¥æœ‰
             if (IsSafe(progressCopy, available)) {
                 for (int i = 1; i <= n; i++) {
                     if (!progressCopy[i].Finished &&
-                        IsExecutable(progressCopy[i], available)) {//Ö»ÓĞÍ¬Ê±Âú×ã½ø³ÌÎ´Íê³É¡¢¿É·ÖÅäĞèÇó×ã¹»²Å½øĞĞ·ÖÅä
+                        IsExecutable(progressCopy[i], available)) {//åªæœ‰åŒæ—¶æ»¡è¶³è¿›ç¨‹æœªå®Œæˆã€å¯åˆ†é…éœ€æ±‚è¶³å¤Ÿæ‰è¿›è¡Œåˆ†é…
                         progressCopy[i].Finished = true;
                         for (int j = 1; j <= m; j++) {
                             available[j] += progressCopy[i].Allocation[j];
@@ -118,21 +118,21 @@ public:
                     }
                 }
             } else {
-                cout << "²»°²È«" << endl;
+                cout << "ä¸å®‰å…¨" << endl;
                 exit(0);
             }
         }
 
-        //Êä³öSafeOrder
-        cout << "SafeOrderÎª£º";
+        //è¾“å‡ºSafeOrder
+        cout << "SafeOrderä¸ºï¼š";
         for (int i = 1; i <= n; i++) {
-            cout << setw(12) << "½ø³Ì" << setw(4) << SafeOrder[i];
+            cout << setw(12) << "è¿›ç¨‹" << setw(4) << SafeOrder[i];
         }
 
         NewRequest(pg, a);
     }
 
-    //ÅĞ¶ÏËùÓĞ½ø³ÌÊÇ·ñÍê³É
+    //åˆ¤æ–­æ‰€æœ‰è¿›ç¨‹æ˜¯å¦å®Œæˆ
     bool NewFinish(Progress pg[MaxNumber]) {
         bool finished = true;
         for (int i = 1; i <= n; i++) {
@@ -141,7 +141,7 @@ public:
         return finished;
     }
 
-    //ÅĞ¶Ï¿É·ÖÅä×ÊÔ´¿É·ñÂú×ã¸Ã½ø³Ì
+    //åˆ¤æ–­å¯åˆ†é…èµ„æºå¯å¦æ»¡è¶³è¯¥è¿›ç¨‹
     bool IsExecutable(Progress pg, const int a[MaxNumber]) {
         bool isExecutable = true;
         for (int i = 1; i <= m; i++) {
@@ -150,7 +150,7 @@ public:
         return isExecutable;
     }
 
-    //ÅĞ¶ÏÏÖÔÚÊÇ·ñ°²È«
+    //åˆ¤æ–­ç°åœ¨æ˜¯å¦å®‰å…¨
     bool IsSafe(Progress pg[MaxNumber], int a[MaxNumber]) {
         bool isExecutable = false;
         for (int i = 1; i <= n; i++) {

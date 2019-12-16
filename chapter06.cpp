@@ -7,86 +7,86 @@ using namespace std;
 class DiskSchedulingAlgorithm {
 public:
 
-    int TrackNum;//´ÅµÀÊı
-    int TrackOrder[MaxNumber];//´ÅÅÌ·ÃÎÊĞòÁĞ
-//    int MoveDistance[MaxNumber];//´ÅÍ·ÒÆ¶¯¾àÀë
-//    double AverageDistance;//Æ½¾ùÑ°µÀ³¤¶È
-    bool direction;//´ÅÍ·ÒÆ¶¯·½Ïò
-    int isAlgorithm;//Ëã·¨Ñ¡Ôñ
-    int StartTrack;//¿ªÊ¼´ÅÅÌºÅ
+    int TrackNum;//ç£é“æ•°
+    int TrackOrder[MaxNumber];//ç£ç›˜è®¿é—®åºåˆ—
+//    int MoveDistance[MaxNumber];//ç£å¤´ç§»åŠ¨è·ç¦»
+//    double AverageDistance;//å¹³å‡å¯»é“é•¿åº¦
+    bool direction;//ç£å¤´ç§»åŠ¨æ–¹å‘
+    int isAlgorithm;//ç®—æ³•é€‰æ‹©
+    int StartTrack;//å¼€å§‹ç£ç›˜å·
 
-    //¶¨ÒåÄ£Äâ¹ı³ÌµÄÊı¾İ½á¹¹
+    //å®šä¹‰æ¨¡æ‹Ÿè¿‡ç¨‹çš„æ•°æ®ç»“æ„
     typedef struct {
-        int TrackIndex;//µ±Ç°´ÅµÀ
-        int TrackNext;//ÏÂÒ»¸ö´ÅµÀ
-        bool Direction;//´ÅÍ·ÒÆ¶¯·½Ïò
-        int MoveDistance;//´ÅÍ·ÒÆ¶¯¾àÀë
-        double AverageDistance;//Æ½¾ùÑ°µÀ³¤¶È
+        int TrackIndex;//å½“å‰ç£é“
+        int TrackNext;//ä¸‹ä¸€ä¸ªç£é“
+        bool Direction;//ç£å¤´ç§»åŠ¨æ–¹å‘
+        int MoveDistance;//ç£å¤´ç§»åŠ¨è·ç¦»
+        double AverageDistance;//å¹³å‡å¯»é“é•¿åº¦
     } Simulate;
 
     Simulate simulate[MaxNumber];
 
-    //ÊäÈë¿ÕÏĞ·ÖÇøÊı¡¢¿ÕÏĞµÄ·ÖÇø´óĞ¡¡¢½ø³ÌÊı¡¢½ø³ÌĞèÒªµÄ·ÖÇø´óĞ¡
+    //è¾“å…¥ç©ºé—²åˆ†åŒºæ•°ã€ç©ºé—²çš„åˆ†åŒºå¤§å°ã€è¿›ç¨‹æ•°ã€è¿›ç¨‹éœ€è¦çš„åˆ†åŒºå¤§å°
     void Input() {
-        cout << "ÇëÊäÈë´ÅµÀ¸öÊıTrackNum£º";
+        cout << "è¯·è¾“å…¥ç£é“ä¸ªæ•°TrackNumï¼š";
         cin >> TrackNum;
 
-        cout << "ÇëÊäÈë¿ªÊ¼´ÅÅÌºÅStartTrack£º";
+        cout << "è¯·è¾“å…¥å¼€å§‹ç£ç›˜å·StartTrackï¼š";
         cin >> StartTrack;
 
         for (int i = 1; i <= TrackNum; i++) {
-            cout << "ÇëÊäÈë´ÅÅÌµÚ" << i << "¸ö·ÃÎÊ´ÅµÀ" << "TrackOrder[" << i << "]£º";
+            cout << "è¯·è¾“å…¥ç£ç›˜ç¬¬" << i << "ä¸ªè®¿é—®ç£é“" << "TrackOrder[" << i << "]ï¼š";
             cin >> TrackOrder[i];
         }
 
         InputAlgorithm();
     }
 
-    //»ñÈ¡Ëã·¨Ñ¡ÔñÊäÈë
+    //è·å–ç®—æ³•é€‰æ‹©è¾“å…¥
     void InputAlgorithm() {
         cout << endl
-             << "ÇëÑ¡ÔñÏëÒªÏÈÊ¹ÓÃµÄËã·¨£¨ 1-FCFS£¬2-SSTF£¬3-SCAN£¬4-Ñ­»·SCAN £º";
+             << "è¯·é€‰æ‹©æƒ³è¦å…ˆä½¿ç”¨çš„ç®—æ³•ï¼ˆ 1-FCFSï¼Œ2-SSTFï¼Œ3-SCANï¼Œ4-å¾ªç¯SCAN ï¼š";
         cin >> isAlgorithm;
 
         if (isAlgorithm != 1) {
-            cout << "ÇëÊäÈë´ÅÍ·ÒÆ¶¯·½Ïòdirection£¨!0ÎªÏòÍâ£¬0ÎªÏòÄÚ£©£º";
+            cout << "è¯·è¾“å…¥ç£å¤´ç§»åŠ¨æ–¹å‘directionï¼ˆ!0ä¸ºå‘å¤–ï¼Œ0ä¸ºå‘å†…ï¼‰ï¼š";
             cin >> direction;
         }
 
         IsAlgorithm();
     }
 
-    //Ëã·¨´æ´¢È·ÈÏ
+    //ç®—æ³•å­˜å‚¨ç¡®è®¤
     void IsAlgorithm() {
         switch (isAlgorithm) {
             case 1:
-                cout << endl << "ÄúÑ¡ÔñµÄÊÇ1-ÏÈÀ´ÏÈ·şÎñFCFSËã·¨" << endl;
+                cout << endl << "æ‚¨é€‰æ‹©çš„æ˜¯1-å…ˆæ¥å…ˆæœåŠ¡FCFSç®—æ³•" << endl;
                 AlgorithmFCFS();
                 break;
             case 2:
-                cout << endl << "ÄúÑ¡ÔñµÄÊÇ2-×î¶ÌÑ°µÀÊ±¼äÓÅÏÈSSTFËã·¨" << endl;
+                cout << endl << "æ‚¨é€‰æ‹©çš„æ˜¯2-æœ€çŸ­å¯»é“æ—¶é—´ä¼˜å…ˆSSTFç®—æ³•" << endl;
                 AlgorithmSSTF();
                 break;
             case 3:
-                cout << endl << "ÄúÑ¡ÔñµÄÊÇ3-SCANËã·¨" << endl;
+                cout << endl << "æ‚¨é€‰æ‹©çš„æ˜¯3-SCANç®—æ³•" << endl;
                 AlgorithmSCAN();
                 break;
             case 4:
-                cout << endl << "ÄúÑ¡ÔñµÄÊÇ4-Ñ­»·SCANËã·¨" << endl;
+                cout << endl << "æ‚¨é€‰æ‹©çš„æ˜¯4-å¾ªç¯SCANç®—æ³•" << endl;
                 AlgorithmCycleSCAN();
                 break;
             default:
-                cout << "Ëã·¨Öµ£º" << isAlgorithm
-                     << "ÓĞÎó,ÇëÖØĞÂÊäÈëÕıÈ·µÄËã·¨ÀàĞÍ£¨ 1-FCFS£¬2-SSTF£¬3-SCAN£¬4-Ñ­»·SCAN £©"
+                cout << "ç®—æ³•å€¼ï¼š" << isAlgorithm
+                     << "æœ‰è¯¯,è¯·é‡æ–°è¾“å…¥æ­£ç¡®çš„ç®—æ³•ç±»å‹ï¼ˆ 1-FCFSï¼Œ2-SSTFï¼Œ3-SCANï¼Œ4-å¾ªç¯SCAN ï¼‰"
                      << endl;
                 InputAlgorithm();
         }
     }
 
-    //Ñ¯ÎÊÊÇ·ñ»¹Òª½øĞĞÆäÓàËã·¨
+    //è¯¢é—®æ˜¯å¦è¿˜è¦è¿›è¡Œå…¶ä½™ç®—æ³•
     void NextAlgorithm() {
         cout << endl
-             << "ÇëÎÊÊÇ·ñ»¹Òª½øĞĞÆäÓàËã·¨£¬ÈôÊÇ£¬ÇëÊäÈë£¨1-4Öµ£©£»Èô·ñ£¬ÇëÊäÈëÈÎÒâ×Ö·û£¨ 1-FCFS£¬2-SSTF£¬3-SCAN£¬4-Ñ­»·SCAN £©£º";
+             << "è¯·é—®æ˜¯å¦è¿˜è¦è¿›è¡Œå…¶ä½™ç®—æ³•ï¼Œè‹¥æ˜¯ï¼Œè¯·è¾“å…¥ï¼ˆ1-4å€¼ï¼‰ï¼›è‹¥å¦ï¼Œè¯·è¾“å…¥ä»»æ„å­—ç¬¦ï¼ˆ 1-FCFSï¼Œ2-SSTFï¼Œ3-SCANï¼Œ4-å¾ªç¯SCAN ï¼‰ï¼š";
         cin >> isAlgorithm;
         if (isAlgorithm != 1 && isAlgorithm != 2 && isAlgorithm != 3 && isAlgorithm != 4) {
             return;
@@ -94,20 +94,20 @@ public:
         IsAlgorithm();
     }
 
-    //Êä³öÒ³ÃæÖÃ»»Ëã·¨Ä£Äâ¹ı³Ì¼°È±Ò³´ÎÊıÓëÈ±Ò³ÂÊ
+    //è¾“å‡ºé¡µé¢ç½®æ¢ç®—æ³•æ¨¡æ‹Ÿè¿‡ç¨‹åŠç¼ºé¡µæ¬¡æ•°ä¸ç¼ºé¡µç‡
     void Print() {
 
-        cout << endl << "Êä³ö´ÅÅÌµ÷¶ÈËã·¨Ä£Äâ¹ı³ÌÈçÏÂ£º" << endl;
+        cout << endl << "è¾“å‡ºç£ç›˜è°ƒåº¦ç®—æ³•æ¨¡æ‹Ÿè¿‡ç¨‹å¦‚ä¸‹ï¼š" << endl;
 
         for (int i = 1; i <= TrackNum; i++) {
-            cout << "µ±Ç°´ÅµÀÎª£º" << right << setw(3) << simulate[i].TrackIndex << "£¬ÏÂÒ»´ÅµÀÎª£º" << right << setw(3)
-                 << simulate[i].TrackNext << "£¬Ñ°µÀ·½Ïò£º" << (simulate[i].Direction ? "ÏòÍâ" : "ÏòÄÚ") << "£¬Ñ°µÀ¾àÀëÎª£º"
-                 << simulate[i].MoveDistance << "£¬ÖÁ´ËÆ½¾ùÑ°µÀ¾àÀëÎª£º" << fixed << setprecision(2) << simulate[i].AverageDistance
+            cout << "å½“å‰ç£é“ä¸ºï¼š" << right << setw(3) << simulate[i].TrackIndex << "ï¼Œä¸‹ä¸€ç£é“ä¸ºï¼š" << right << setw(3)
+                 << simulate[i].TrackNext << "ï¼Œå¯»é“æ–¹å‘ï¼š" << (simulate[i].Direction ? "å‘å¤–" : "å‘å†…") << "ï¼Œå¯»é“è·ç¦»ä¸ºï¼š"
+                 << simulate[i].MoveDistance << "ï¼Œè‡³æ­¤å¹³å‡å¯»é“è·ç¦»ä¸ºï¼š" << fixed << setprecision(2) << simulate[i].AverageDistance
                  << endl;
         }
 
-        cout << endl << "Êä³ö´ÅÅÌµ÷¶ÈËã·¨Ä£Äâ±í¸ñÈçÏÂ£º" << endl;
-        //Ä£Äâ¹ı³Ì
+        cout << endl << "è¾“å‡ºç£ç›˜è°ƒåº¦ç®—æ³•æ¨¡æ‹Ÿè¡¨æ ¼å¦‚ä¸‹ï¼š" << endl;
+        //æ¨¡æ‹Ÿè¿‡ç¨‹
         cout << left << setw(15) << "";
         for (int i = 1; i <= TrackNum; i++) {
             cout << right << setw(12) << "Simulate" << setw(3) << i;
@@ -138,11 +138,11 @@ public:
             cout << right << setw(15) << setprecision(2) << simulate[i].AverageDistance;
         }
 
-        cout << endl << "Ëã·¨Æ½¾ùÑ°µÀ³¤¶ÈÎª£º" << setprecision(2) << simulate[TrackNum].AverageDistance << endl;
+        cout << endl << "ç®—æ³•å¹³å‡å¯»é“é•¿åº¦ä¸ºï¼š" << setprecision(2) << simulate[TrackNum].AverageDistance << endl;
 
     }
 
-    //µ÷ÓÃÀûÓÃÏÈÀ´ÏÈ·şÎñFCFSËã·¨½øĞĞµ÷¶È¼ÆËã
+    //è°ƒç”¨åˆ©ç”¨å…ˆæ¥å…ˆæœåŠ¡FCFSç®—æ³•è¿›è¡Œè°ƒåº¦è®¡ç®—
     void AlgorithmFCFS() {
 
         for (int i = 1; i <= TrackNum; i++) {
@@ -171,7 +171,7 @@ public:
         NextAlgorithm();
     }
 
-    //µ÷ÓÃ×î¶ÌÑ°µÀÊ±¼äÓÅÏÈSSTFËã·¨½øĞĞµ÷¶È¼ÆËã
+    //è°ƒç”¨æœ€çŸ­å¯»é“æ—¶é—´ä¼˜å…ˆSSTFç®—æ³•è¿›è¡Œè°ƒåº¦è®¡ç®—
     void AlgorithmSSTF() {
 
         Print();
@@ -179,7 +179,7 @@ public:
         NextAlgorithm();
     }
 
-    //µ÷ÓÃSCANËã·¨½øĞĞµ÷¶È¼ÆËã
+    //è°ƒç”¨SCANç®—æ³•è¿›è¡Œè°ƒåº¦è®¡ç®—
     void AlgorithmSCAN() {
 
 
@@ -188,7 +188,7 @@ public:
         NextAlgorithm();
     }
 
-    //µ÷ÓÃÑ­»·SCANËã·¨½øĞĞµ÷¶È¼ÆËã
+    //è°ƒç”¨å¾ªç¯SCANç®—æ³•è¿›è¡Œè°ƒåº¦è®¡ç®—
     void AlgorithmCycleSCAN() {
 
 

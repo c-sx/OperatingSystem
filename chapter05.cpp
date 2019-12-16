@@ -7,66 +7,66 @@ using namespace std;
 class virtualMemoryPageReplacementAlgorithm {
 public:
 
-    int PageOrder[MaxNumber];//Ò³ÃæĞòÁĞ
-    int Simulate[MaxNumber][MaxNumber];//Ä£Äâ¹ı³Ì
-//    int PageCount[MaxNumber];//µ±Ç°ÄÚ´æ¾àÀëÏÂÒ»´Î³öÏÖµÄ¾àÀë
-    int PageNum;//Ò³ÃæÊı
-    int MinBlockNum;//×îĞ¡ÎïÀí¿éÊı
-    int LackNum;//È±Ò³Êı
-    double LackPageRate;//È±Ò³ÂÊ
+    int PageOrder[MaxNumber];//é¡µé¢åºåˆ—
+    int Simulate[MaxNumber][MaxNumber];//æ¨¡æ‹Ÿè¿‡ç¨‹
+//    int PageCount[MaxNumber];//å½“å‰å†…å­˜è·ç¦»ä¸‹ä¸€æ¬¡å‡ºç°çš„è·ç¦»
+    int PageNum;//é¡µé¢æ•°
+    int MinBlockNum;//æœ€å°ç‰©ç†å—æ•°
+    int LackNum;//ç¼ºé¡µæ•°
+    double LackPageRate;//ç¼ºé¡µç‡
     bool found;
-    int isAlgorithm;//Ëã·¨Ñ¡Ôñ
+    int isAlgorithm;//ç®—æ³•é€‰æ‹©
 
-    //ÊäÈë¿ÕÏĞ·ÖÇøÊı¡¢¿ÕÏĞµÄ·ÖÇø´óĞ¡¡¢½ø³ÌÊı¡¢½ø³ÌĞèÒªµÄ·ÖÇø´óĞ¡
+    //è¾“å…¥ç©ºé—²åˆ†åŒºæ•°ã€ç©ºé—²çš„åˆ†åŒºå¤§å°ã€è¿›ç¨‹æ•°ã€è¿›ç¨‹éœ€è¦çš„åˆ†åŒºå¤§å°
     void Input() {
-        cout << "ÇëÊäÈë×îĞ¡ÎïÀí¿éÊıMinBlockNum£º";
+        cout << "è¯·è¾“å…¥æœ€å°ç‰©ç†å—æ•°MinBlockNumï¼š";
         cin >> MinBlockNum;
-        cout << "ÇëÊäÈëÒ³Ãæ¸öÊıPageNum£º";
+        cout << "è¯·è¾“å…¥é¡µé¢ä¸ªæ•°PageNumï¼š";
         cin >> PageNum;
 
         for (int i = 1; i <= PageNum; i++) {
-            cout << "ÇëÊäÈëÒ³Ãæ" << i << "±àºÅ" << "PageOrder[" << i << "]£º";
+            cout << "è¯·è¾“å…¥é¡µé¢" << i << "ç¼–å·" << "PageOrder[" << i << "]ï¼š";
             cin >> PageOrder[i];
         }
 
         InputAlgorithm();
     }
 
-    //»ñÈ¡Ëã·¨Ñ¡ÔñÊäÈë
+    //è·å–ç®—æ³•é€‰æ‹©è¾“å…¥
     void InputAlgorithm() {
         cout << endl
-             << "ÇëÑ¡ÔñÏëÒªÏÈÊ¹ÓÃµÄËã·¨£¨ 1-ÏÈ½øÏÈ³ö(FIFO)Ò³ÃæÖÃ»»Ëã·¨£¬2-×î¼Ñ(OPI)Ò³ÃæÖÃ»»Ëã·¨£¬3-×î½ü×î¾ÃÎ´Ê¹ÓÃ(LRU)Ò³ÃæÖÃ»»Ëã·¨ £©£º";
+             << "è¯·é€‰æ‹©æƒ³è¦å…ˆä½¿ç”¨çš„ç®—æ³•ï¼ˆ 1-å…ˆè¿›å…ˆå‡º(FIFO)é¡µé¢ç½®æ¢ç®—æ³•ï¼Œ2-æœ€ä½³(OPI)é¡µé¢ç½®æ¢ç®—æ³•ï¼Œ3-æœ€è¿‘æœ€ä¹…æœªä½¿ç”¨(LRU)é¡µé¢ç½®æ¢ç®—æ³• ï¼‰ï¼š";
         cin >> isAlgorithm;
         IsAlgorithm();
     }
 
-    //Ëã·¨´æ´¢È·ÈÏ
+    //ç®—æ³•å­˜å‚¨ç¡®è®¤
     void IsAlgorithm() {
         switch (isAlgorithm) {
             case 1:
-                cout << endl << "ÄúÑ¡ÔñµÄÊÇ1-ÏÈ½øÏÈ³ö(FIFO)Ò³ÃæÖÃ»»Ëã·¨" << endl;
+                cout << endl << "æ‚¨é€‰æ‹©çš„æ˜¯1-å…ˆè¿›å…ˆå‡º(FIFO)é¡µé¢ç½®æ¢ç®—æ³•" << endl;
                 AlgorithmFIFO();
                 break;
             case 2:
-                cout << endl << "ÄúÑ¡ÔñµÄÊÇ2-×î¼Ñ(OPI)Ò³ÃæÖÃ»»Ëã·¨" << endl;
+                cout << endl << "æ‚¨é€‰æ‹©çš„æ˜¯2-æœ€ä½³(OPI)é¡µé¢ç½®æ¢ç®—æ³•" << endl;
                 AlgorithmOPI();
                 break;
             case 3:
-                cout << endl << "ÄúÑ¡ÔñµÄÊÇ3-×î½ü×î¾ÃÎ´Ê¹ÓÃ(LRU)Ò³ÃæÖÃ»»Ëã·¨" << endl;
+                cout << endl << "æ‚¨é€‰æ‹©çš„æ˜¯3-æœ€è¿‘æœ€ä¹…æœªä½¿ç”¨(LRU)é¡µé¢ç½®æ¢ç®—æ³•" << endl;
                 AlgorithmLRU();
                 break;
             default:
-                cout << "Ëã·¨Öµ£º" << isAlgorithm
-                     << "ÓĞÎó,ÇëÖØĞÂÊäÈëÕıÈ·µÄËã·¨ÀàĞÍ£¨ 1-ÏÈ½øÏÈ³ö(FIFO)Ò³ÃæÖÃ»»Ëã·¨£¬2-×î¼Ñ(OPI)Ò³ÃæÖÃ»»Ëã·¨£¬3-×î½ü×î¾ÃÎ´Ê¹ÓÃ(LRU)Ò³ÃæÖÃ»»Ëã·¨ £©"
+                cout << "ç®—æ³•å€¼ï¼š" << isAlgorithm
+                     << "æœ‰è¯¯,è¯·é‡æ–°è¾“å…¥æ­£ç¡®çš„ç®—æ³•ç±»å‹ï¼ˆ 1-å…ˆè¿›å…ˆå‡º(FIFO)é¡µé¢ç½®æ¢ç®—æ³•ï¼Œ2-æœ€ä½³(OPI)é¡µé¢ç½®æ¢ç®—æ³•ï¼Œ3-æœ€è¿‘æœ€ä¹…æœªä½¿ç”¨(LRU)é¡µé¢ç½®æ¢ç®—æ³• ï¼‰"
                      << endl;
                 InputAlgorithm();
         }
     }
 
-    //Ñ¯ÎÊÊÇ·ñ»¹Òª½øĞĞÆäÓàËã·¨
+    //è¯¢é—®æ˜¯å¦è¿˜è¦è¿›è¡Œå…¶ä½™ç®—æ³•
     void NextAlgorithm() {
         cout << endl
-             << "ÇëÎÊÊÇ·ñ»¹Òª½øĞĞÆäÓàËã·¨£¬ÈôÊÇ£¬ÇëÊäÈë£¨1-3Öµ£©£»Èô·ñ£¬ÇëÊäÈëÈÎÒâ×Ö·û£¨ 1-ÏÈ½øÏÈ³ö(FIFO)Ò³ÃæÖÃ»»Ëã·¨£¬2-×î¼Ñ(OPI)Ò³ÃæÖÃ»»Ëã·¨£¬3-×î½ü×î¾ÃÎ´Ê¹ÓÃ(LRU)Ò³ÃæÖÃ»»Ëã·¨ £©£º";
+             << "è¯·é—®æ˜¯å¦è¿˜è¦è¿›è¡Œå…¶ä½™ç®—æ³•ï¼Œè‹¥æ˜¯ï¼Œè¯·è¾“å…¥ï¼ˆ1-3å€¼ï¼‰ï¼›è‹¥å¦ï¼Œè¯·è¾“å…¥ä»»æ„å­—ç¬¦ï¼ˆ 1-å…ˆè¿›å…ˆå‡º(FIFO)é¡µé¢ç½®æ¢ç®—æ³•ï¼Œ2-æœ€ä½³(OPI)é¡µé¢ç½®æ¢ç®—æ³•ï¼Œ3-æœ€è¿‘æœ€ä¹…æœªä½¿ç”¨(LRU)é¡µé¢ç½®æ¢ç®—æ³• ï¼‰ï¼š";
         cin >> isAlgorithm;
         if (isAlgorithm != 1 && isAlgorithm != 2 && isAlgorithm != 3) {
             return;
@@ -74,12 +74,12 @@ public:
         IsAlgorithm();
     }
 
-    //Êä³öÒ³ÃæÖÃ»»Ëã·¨Ä£Äâ¹ı³Ì¼°È±Ò³´ÎÊıÓëÈ±Ò³ÂÊ
+    //è¾“å‡ºé¡µé¢ç½®æ¢ç®—æ³•æ¨¡æ‹Ÿè¿‡ç¨‹åŠç¼ºé¡µæ¬¡æ•°ä¸ç¼ºé¡µç‡
     void Print() {
 
-        cout << endl << "Ò³ÃæÖÃ»»Ëã·¨Ä£Äâ¹ı³ÌÈçÏÂ£º" << endl;
+        cout << endl << "é¡µé¢ç½®æ¢ç®—æ³•æ¨¡æ‹Ÿè¿‡ç¨‹å¦‚ä¸‹ï¼š" << endl;
 
-        //Ä£Äâ¹ı³Ì
+        //æ¨¡æ‹Ÿè¿‡ç¨‹
         cout << left << setw(10) << "";
         for (int i = 1; i <= PageNum; i++) {
             cout << right << setw(8) << "Page" << setw(2) << i;
@@ -96,24 +96,24 @@ public:
             }
         }
 
-        cout << endl << "Ò³ÃæÖÃ»»Ëã·¨È±Ò³´ÎÊıÎª£º" << LackNum << endl;
+        cout << endl << "é¡µé¢ç½®æ¢ç®—æ³•ç¼ºé¡µæ¬¡æ•°ä¸ºï¼š" << LackNum << endl;
 
-        cout << "Ò³ÃæÖÃ»»Ëã·¨È±Ò³ÂÊÎª£º" << setprecision(2) << LackPageRate * 100 << "%" << endl;
+        cout << "é¡µé¢ç½®æ¢ç®—æ³•ç¼ºé¡µç‡ä¸ºï¼š" << setprecision(2) << LackPageRate * 100 << "%" << endl;
 
     }
 
-    //µ÷ÓÃÏÈ½øÏÈ³ö(FIFO)Ò³ÃæÖÃ»»Ëã·¨½øĞĞµ÷¶È¼ÆËã
+    //è°ƒç”¨å…ˆè¿›å…ˆå‡º(FIFO)é¡µé¢ç½®æ¢ç®—æ³•è¿›è¡Œè°ƒåº¦è®¡ç®—
     void AlgorithmFIFO() {
-        //³õÊ¼»¯È±Ò³´ÎÊı
+        //åˆå§‹åŒ–ç¼ºé¡µæ¬¡æ•°
         LackNum = 0;
-        //¶¨Òå¶ÓÁĞÖ¸Õë£¬Ö¸ÏòÏÂÒ»¸ö»»³öµÄÒ³Ãæ
+        //å®šä¹‰é˜Ÿåˆ—æŒ‡é’ˆï¼ŒæŒ‡å‘ä¸‹ä¸€ä¸ªæ¢å‡ºçš„é¡µé¢
         int pointer = 0;
 
         for (int i = 1; i <= PageNum; i++) {
-            //³õÊ¼»¯found
+            //åˆå§‹åŒ–found
             found = false;
 
-            //Èç¹ûÊÇµÚÒ»¸öÒ³Ãæ£¬Ö±½ÓÌí¼ÓÒ³Ãæ£¬È±Ò³Êı+1
+            //å¦‚æœæ˜¯ç¬¬ä¸€ä¸ªé¡µé¢ï¼Œç›´æ¥æ·»åŠ é¡µé¢ï¼Œç¼ºé¡µæ•°+1
             if (i == 1) {
                 Simulate[1][i] = PageOrder[i];
                 LackNum++;
@@ -122,7 +122,7 @@ public:
             }
 
             for (int j = 1; j <= MinBlockNum; j++) {
-                //ÅĞ¶ÏÊÇ·ñÔÚÎïÀí¿éÖĞ£¬Èô´æÔÚ£¬Ôò´ËÒ³ÃæÎ´È±Ò³
+                //åˆ¤æ–­æ˜¯å¦åœ¨ç‰©ç†å—ä¸­ï¼Œè‹¥å­˜åœ¨ï¼Œåˆ™æ­¤é¡µé¢æœªç¼ºé¡µ
                 if (Simulate[j][i - 1] == PageOrder[i]) {
                     for (int k = 1; k <= MinBlockNum; k++) {
                         Simulate[k][i] = Simulate[k][i - 1];
@@ -131,7 +131,7 @@ public:
                     break;
                 }
 
-                //ÈôÈ±Ò³ÇÒÓĞ¿ÕÎïÀí¿é£¬Ôò²»ÖÃ»»£¬Ö±½ÓÌîÈë
+                //è‹¥ç¼ºé¡µä¸”æœ‰ç©ºç‰©ç†å—ï¼Œåˆ™ä¸ç½®æ¢ï¼Œç›´æ¥å¡«å…¥
                 if (Simulate[j][i - 1] == 0) {
                     for (int k = 1; k <= MinBlockNum; k++) {
                         Simulate[k][i] = Simulate[k][i - 1];
@@ -147,7 +147,7 @@ public:
                 for (int j = 1; j <= MinBlockNum; j++) {
                     Simulate[j][i] = Simulate[j][i - 1];
                 }
-                cout << "Ò³Ãæ" << i << "»»µôµÚ" << pointer << "ÎïÀí¿éÖĞµÄÒ³Ãæ" << endl;
+                cout << "é¡µé¢" << i << "æ¢æ‰ç¬¬" << pointer << "ç‰©ç†å—ä¸­çš„é¡µé¢" << endl;
                 Simulate[pointer][i] = PageOrder[i];
                 LackNum++;
                 if (pointer == MinBlockNum) {
@@ -165,20 +165,20 @@ public:
         NextAlgorithm();
     }
 
-    //µ÷ÓÃ×î¼Ñ(OPI)Ò³ÃæÖÃ»»Ëã·¨½øĞĞµ÷¶È¼ÆËã
+    //è°ƒç”¨æœ€ä½³(OPI)é¡µé¢ç½®æ¢ç®—æ³•è¿›è¡Œè°ƒåº¦è®¡ç®—
     void AlgorithmOPI() {
-        //³õÊ¼»¯È±Ò³´ÎÊı
+        //åˆå§‹åŒ–ç¼ºé¡µæ¬¡æ•°
         LackNum = 0;
 
         for (int i = 1; i <= PageNum; i++) {
-            //³õÊ¼»¯found
+            //åˆå§‹åŒ–found
             found = false;
-            //³õÊ¼»¯¶ÓÁĞÖ¸Õë£¬Ö¸ÏòÏÂÒ»¸ö»»³öµÄÒ³Ãæ
+            //åˆå§‹åŒ–é˜Ÿåˆ—æŒ‡é’ˆï¼ŒæŒ‡å‘ä¸‹ä¸€ä¸ªæ¢å‡ºçš„é¡µé¢
             int pointer = 0;
-            //³õÊ¼»¯×îÔ¶¾àÀë
+            //åˆå§‹åŒ–æœ€è¿œè·ç¦»
             int distance = 0;
 
-            //Èç¹ûÊÇµÚÒ»¸öÒ³Ãæ£¬Ö±½ÓÌí¼ÓÒ³Ãæ£¬È±Ò³Êı+1
+            //å¦‚æœæ˜¯ç¬¬ä¸€ä¸ªé¡µé¢ï¼Œç›´æ¥æ·»åŠ é¡µé¢ï¼Œç¼ºé¡µæ•°+1
             if (i == 1) {
                 Simulate[1][i] = PageOrder[i];
                 LackNum++;
@@ -186,7 +186,7 @@ public:
             }
 
             for (int j = 1; j <= MinBlockNum; j++) {
-                //ÅĞ¶ÏÊÇ·ñÔÚÎïÀí¿éÖĞ£¬Èô´æÔÚ£¬Ôò´ËÒ³ÃæÎ´È±Ò³
+                //åˆ¤æ–­æ˜¯å¦åœ¨ç‰©ç†å—ä¸­ï¼Œè‹¥å­˜åœ¨ï¼Œåˆ™æ­¤é¡µé¢æœªç¼ºé¡µ
                 if (Simulate[j][i - 1] == PageOrder[i]) {
                     for (int k = 1; k <= MinBlockNum; k++) {
                         Simulate[k][i] = Simulate[k][i - 1];
@@ -195,7 +195,7 @@ public:
                     break;
                 }
 
-                //ÈôÈ±Ò³ÇÒÓĞ¿ÕÎïÀí¿é£¬Ôò²»ÖÃ»»£¬Ö±½ÓÌîÈë
+                //è‹¥ç¼ºé¡µä¸”æœ‰ç©ºç‰©ç†å—ï¼Œåˆ™ä¸ç½®æ¢ï¼Œç›´æ¥å¡«å…¥
                 if (Simulate[j][i - 1] == 0) {
                     for (int k = 1; k <= MinBlockNum; k++) {
                         Simulate[k][i] = Simulate[k][i - 1];
@@ -210,7 +210,7 @@ public:
             if (!found) {
                 for (int j = 1; j <= MinBlockNum; j++) {
                     Simulate[j][i] = Simulate[j][i - 1];
-                    //Ñ°ÕÒ×îÓÅÖÃ»»Î»
+                    //å¯»æ‰¾æœ€ä¼˜ç½®æ¢ä½
                     for (int k = i + 1; k <= PageNum; k++) {
                         if (Simulate[j][i] == PageOrder[k]) {
                             if (k - i > distance) {
@@ -219,7 +219,7 @@ public:
                             }
                             break;
                         }
-                        //ÅĞ¶ÏÒ³ÁĞ±íÖĞÎŞ´ËĞèÇó£¬Ö±½Ó½«´ËÒ³Ãæ×÷ÎªÌæ»»Ò³Ãæ
+                        //åˆ¤æ–­é¡µåˆ—è¡¨ä¸­æ— æ­¤éœ€æ±‚ï¼Œç›´æ¥å°†æ­¤é¡µé¢ä½œä¸ºæ›¿æ¢é¡µé¢
                         if (k == PageNum && distance < MaxNumber) {
                             distance = MaxNumber;
                             pointer = j;
@@ -227,7 +227,7 @@ public:
                     }
                 }
 
-                cout << "Ò³Ãæ" << i << "ÓÚ×îÔ¶¾àÀë" << distance << "»»µôµÚ" << pointer << "ÎïÀí¿éÖĞµÄÒ³Ãæ" << endl;
+                cout << "é¡µé¢" << i << "äºæœ€è¿œè·ç¦»" << distance << "æ¢æ‰ç¬¬" << pointer << "ç‰©ç†å—ä¸­çš„é¡µé¢" << endl;
 
                 Simulate[pointer][i] = PageOrder[i];
                 LackNum++;
@@ -241,20 +241,20 @@ public:
         NextAlgorithm();
     }
 
-    //µ÷ÓÃ×î½ü×î¾ÃÎ´Ê¹ÓÃ(LRU)Ò³ÃæÖÃ»»Ëã·¨½øĞĞµ÷¶È¼ÆËã
+    //è°ƒç”¨æœ€è¿‘æœ€ä¹…æœªä½¿ç”¨(LRU)é¡µé¢ç½®æ¢ç®—æ³•è¿›è¡Œè°ƒåº¦è®¡ç®—
     void AlgorithmLRU() {
-        //³õÊ¼»¯È±Ò³´ÎÊı
+        //åˆå§‹åŒ–ç¼ºé¡µæ¬¡æ•°
         LackNum = 0;
 
         for (int i = 1; i <= PageNum; i++) {
-            //³õÊ¼»¯found
+            //åˆå§‹åŒ–found
             found = false;
-            //³õÊ¼»¯¶ÓÁĞÖ¸Õë£¬Ö¸ÏòÏÂÒ»¸ö»»³öµÄÒ³Ãæ
+            //åˆå§‹åŒ–é˜Ÿåˆ—æŒ‡é’ˆï¼ŒæŒ‡å‘ä¸‹ä¸€ä¸ªæ¢å‡ºçš„é¡µé¢
             int pointer = 0;
-            //³õÊ¼»¯×îÔ¶¾àÀë
+            //åˆå§‹åŒ–æœ€è¿œè·ç¦»
             int distance = 0;
 
-            //Èç¹ûÊÇµÚÒ»¸öÒ³Ãæ£¬Ö±½ÓÌí¼ÓÒ³Ãæ£¬È±Ò³Êı+1
+            //å¦‚æœæ˜¯ç¬¬ä¸€ä¸ªé¡µé¢ï¼Œç›´æ¥æ·»åŠ é¡µé¢ï¼Œç¼ºé¡µæ•°+1
             if (i == 1) {
                 Simulate[1][i] = PageOrder[i];
                 LackNum++;
@@ -262,7 +262,7 @@ public:
             }
 
             for (int j = 1; j <= MinBlockNum; j++) {
-                //ÅĞ¶ÏÊÇ·ñÔÚÎïÀí¿éÖĞ£¬Èô´æÔÚ£¬Ôò´ËÒ³ÃæÎ´È±Ò³
+                //åˆ¤æ–­æ˜¯å¦åœ¨ç‰©ç†å—ä¸­ï¼Œè‹¥å­˜åœ¨ï¼Œåˆ™æ­¤é¡µé¢æœªç¼ºé¡µ
                 if (Simulate[j][i - 1] == PageOrder[i]) {
                     for (int k = 1; k <= MinBlockNum; k++) {
                         Simulate[k][i] = Simulate[k][i - 1];
@@ -271,7 +271,7 @@ public:
                     break;
                 }
 
-                //ÈôÈ±Ò³ÇÒÓĞ¿ÕÎïÀí¿é£¬Ôò²»ÖÃ»»£¬Ö±½ÓÌîÈë
+                //è‹¥ç¼ºé¡µä¸”æœ‰ç©ºç‰©ç†å—ï¼Œåˆ™ä¸ç½®æ¢ï¼Œç›´æ¥å¡«å…¥
                 if (Simulate[j][i - 1] == 0) {
                     for (int k = 1; k <= MinBlockNum; k++) {
                         Simulate[k][i] = Simulate[k][i - 1];
@@ -286,7 +286,7 @@ public:
             if (!found) {
                 for (int j = 1; j <= MinBlockNum; j++) {
                     Simulate[j][i] = Simulate[j][i - 1];
-                    //Ñ°ÕÒ×îÓÅÖÃ»»Î»
+                    //å¯»æ‰¾æœ€ä¼˜ç½®æ¢ä½
                     for (int k = i - 1; k > 0; k--) {
                         if (Simulate[j][i] == PageOrder[k]) {
                             if (i - k > distance) {
@@ -295,7 +295,7 @@ public:
                             }
                             break;
                         }
-                        //ÅĞ¶ÏÒ³ÁĞ±íÖĞÎŞ´ËĞèÇó£¬Ö±½Ó½«´ËÒ³Ãæ×÷ÎªÌæ»»Ò³Ãæ
+                        //åˆ¤æ–­é¡µåˆ—è¡¨ä¸­æ— æ­¤éœ€æ±‚ï¼Œç›´æ¥å°†æ­¤é¡µé¢ä½œä¸ºæ›¿æ¢é¡µé¢
                         if (k == 1 && distance < MaxNumber) {
                             distance = MaxNumber;
                             pointer = j;
@@ -303,7 +303,7 @@ public:
                     }
                 }
 
-                cout << "Ò³Ãæ" << i << "ÓÚ×îÔ¶¾àÀë" << distance << "»»µôµÚ" << pointer << "ÎïÀí¿éÖĞµÄÒ³Ãæ" << endl;
+                cout << "é¡µé¢" << i << "äºæœ€è¿œè·ç¦»" << distance << "æ¢æ‰ç¬¬" << pointer << "ç‰©ç†å—ä¸­çš„é¡µé¢" << endl;
 
                 Simulate[pointer][i] = PageOrder[i];
                 LackNum++;

@@ -8,40 +8,40 @@ using namespace std;
 class RRSchedule {
 public:
 
-    int n;//½ø³ÌÊı
-    int q;//Ê±¼äÆ¬´óĞ¡
-    int ArrivalTime[MaxNum];//½ø³Ìµ½´ïÊ±¼äT[i]
-    int ServiceTime[MaxNum];//½ø³Ì·şÎñÊ±¼äS[i]
-    double AverageWT = 0;//Æ½¾ùÖÜ×ªÊ±¼ä
-    double AverageWWT = 0;//Æ½¾ù´øÈ¨ÖÜ×ªÊ±¼ä
+    int n;//è¿›ç¨‹æ•°
+    int q;//æ—¶é—´ç‰‡å¤§å°
+    int ArrivalTime[MaxNum];//è¿›ç¨‹åˆ°è¾¾æ—¶é—´T[i]
+    int ServiceTime[MaxNum];//è¿›ç¨‹æœåŠ¡æ—¶é—´S[i]
+    double AverageWT = 0;//å¹³å‡å‘¨è½¬æ—¶é—´
+    double AverageWWT = 0;//å¹³å‡å¸¦æƒå‘¨è½¬æ—¶é—´
 
-    //¶¨Òå½ø³ÌµÄÊı¾İ½á¹¹
+    //å®šä¹‰è¿›ç¨‹çš„æ•°æ®ç»“æ„
     typedef struct {
         int index;
-        int ArrivalTime;//½ø³Ìµ½´ïÊ±¼ä
-        int ServiceTime;//½ø³Ì·şÎñÊ±¼ä
-        int PServiceTime;//Ê£Óà½ø³Ì·şÎñÊ±¼äP[i]
-        int FinishedTime;//Íê³ÉÊ±¼ä
-        int WholeTime;//ÖÜ×ªÊ±¼ä
-        double WeightWholeTime;//´øÈ¨ÖÜ×ªÊ±¼ä
-        bool Finished;//Íê³É×´Ì¬
+        int ArrivalTime;//è¿›ç¨‹åˆ°è¾¾æ—¶é—´
+        int ServiceTime;//è¿›ç¨‹æœåŠ¡æ—¶é—´
+        int PServiceTime;//å‰©ä½™è¿›ç¨‹æœåŠ¡æ—¶é—´P[i]
+        int FinishedTime;//å®Œæˆæ—¶é—´
+        int WholeTime;//å‘¨è½¬æ—¶é—´
+        double WeightWholeTime;//å¸¦æƒå‘¨è½¬æ—¶é—´
+        bool Finished;//å®ŒæˆçŠ¶æ€
     } Progress;
 
     queue<Progress> queueRR;
     Progress progress[MaxNum];
 
-    //ÊäÈë½ø³ÌĞÅÏ¢
-    //½«ÊäÈëµÄArrivalTimeĞÅÏ¢ÓëServiceTimeĞÅÏ¢´æ´¢½øÊı×é
+    //è¾“å…¥è¿›ç¨‹ä¿¡æ¯
+    //å°†è¾“å…¥çš„ArrivalTimeä¿¡æ¯ä¸ServiceTimeä¿¡æ¯å­˜å‚¨è¿›æ•°ç»„
     void InputProcess() {
-        cout << "ÇëÊäÈë½ø³ÌÊıÁ¿£º";
+        cout << "è¯·è¾“å…¥è¿›ç¨‹æ•°é‡ï¼š";
         cin >> n;
         for (int i = 1; i <= n; i++) {
-            cout << "ÇëÊäÈë½ø³Ì" << i << "µÄµ½´ïÊ±¼äArrivalTime[" << i << "]£º";
+            cout << "è¯·è¾“å…¥è¿›ç¨‹" << i << "çš„åˆ°è¾¾æ—¶é—´ArrivalTime[" << i << "]ï¼š";
             cin >> ArrivalTime[i];
-            cout << "ÇëÊäÈë½ø³Ì" << i << "µÄ·şÎñÊ±¼äServiceTime[" << i << "]£º";
+            cout << "è¯·è¾“å…¥è¿›ç¨‹" << i << "çš„æœåŠ¡æ—¶é—´ServiceTime[" << i << "]ï¼š";
             cin >> ServiceTime[i];
         }
-        cout << "ÇëÊäÈëÊ±¼äÆ¬´óĞ¡£º";
+        cout << "è¯·è¾“å…¥æ—¶é—´ç‰‡å¤§å°ï¼š";
         cin >> q;
         cout << endl;
     }
@@ -58,90 +58,90 @@ public:
         }
     }
 
-    //µ÷ÓÃRRËã·¨½øĞĞµ÷¶È¼ÆËã
+    //è°ƒç”¨RRç®—æ³•è¿›è¡Œè°ƒåº¦è®¡ç®—
     void AlgorithmRR() {
         int finishTime = 0;
         while (!queueRR.empty()) {
-            //°´½ø³ÌË³Ğò¶ÁÈ¡¶ÓÁĞÊ×Öµ½øĞĞ²Ù×÷£¬²¢³ö¶ÓÁĞ£¬ÅĞ¶ÏÆäÊÇ·ñÍê³É£¬ÈôÎŞ£¬Ôò²åÈë¶ÓÁĞÎ²£¬²¢ÔÚÖ´ĞĞ¹ı³ÌÖĞÊä³öµ÷¶È¹ı³Ì
+            //æŒ‰è¿›ç¨‹é¡ºåºè¯»å–é˜Ÿåˆ—é¦–å€¼è¿›è¡Œæ“ä½œï¼Œå¹¶å‡ºé˜Ÿåˆ—ï¼Œåˆ¤æ–­å…¶æ˜¯å¦å®Œæˆï¼Œè‹¥æ— ï¼Œåˆ™æ’å…¥é˜Ÿåˆ—å°¾ï¼Œå¹¶åœ¨æ‰§è¡Œè¿‡ç¨‹ä¸­è¾“å‡ºè°ƒåº¦è¿‡ç¨‹
             int x = queueRR.front().index;
-            if (progress[x].PServiceTime > q) {//½ø³ÌÎ´½áÊø
-                cout << "Ê±¿Ì" << finishTime + 1 << "½ø³Ì" << x << "¿ªÊ¼ÔËĞĞ" << endl;
+            if (progress[x].PServiceTime > q) {//è¿›ç¨‹æœªç»“æŸ
+                cout << "æ—¶åˆ»" << finishTime + 1 << "è¿›ç¨‹" << x << "å¼€å§‹è¿è¡Œ" << endl;
                 finishTime += q;
                 progress[x].PServiceTime -= q;
                 queueRR.pop();
                 queueRR.push(progress[x]);
-            } else {//½ø³Ì½áÊø
-                cout << "Ê±¿Ì" << finishTime + 1 << "½ø³Ì" << x << "¿ªÊ¼ÔËĞĞ" << endl;
+            } else {//è¿›ç¨‹ç»“æŸ
+                cout << "æ—¶åˆ»" << finishTime + 1 << "è¿›ç¨‹" << x << "å¼€å§‹è¿è¡Œ" << endl;
                 progress[x].Finished = true;
                 finishTime += progress[x].PServiceTime;
                 progress[x].PServiceTime = 0;
                 progress[x].FinishedTime = finishTime;
-                cout << "Ê±¿Ì" << finishTime << "½ø³Ì" << x << "½áÊøÔËĞĞ" << endl;
+                cout << "æ—¶åˆ»" << finishTime << "è¿›ç¨‹" << x << "ç»“æŸè¿è¡Œ" << endl;
                 queueRR.pop();
             }
         }
 
-        //¼ÆËãÊôĞÔ
+        //è®¡ç®—å±æ€§
         for (int i = 1; i <= n; i++) {
-            //¼ÆËãÖÜ×ªÊ±¼ä
+            //è®¡ç®—å‘¨è½¬æ—¶é—´
             progress[i].WholeTime = progress[i].FinishedTime - progress[i].ArrivalTime;
 
-            //¼ÆËã´øÈ¨ÖÜ×ªÊ±¼ä
+            //è®¡ç®—å¸¦æƒå‘¨è½¬æ—¶é—´
             progress[i].WeightWholeTime = (double) progress[i].WholeTime / progress[i].ServiceTime;
 
-            //¼ÆËãÆ½¾ùÖÜ×ªÊ±¼ä
+            //è®¡ç®—å¹³å‡å‘¨è½¬æ—¶é—´
             AverageWT += progress[i].WholeTime;
 
-            //¼ÆËãÆ½¾Ö´øÈ¨ÖÜ×ªÊ±¼ä
+            //è®¡ç®—å¹³å±€å¸¦æƒå‘¨è½¬æ—¶é—´
             AverageWWT += progress[i].WeightWholeTime;
         }
 
-        //¼ÆËãÆ½¾ùÖÜ×ªÊ±¼ä
+        //è®¡ç®—å¹³å‡å‘¨è½¬æ—¶é—´
         AverageWT /= (double) n;
 
-        //¼ÆËãÆ½¾Ö´øÈ¨ÖÜ×ªÊ±¼ä
+        //è®¡ç®—å¹³å±€å¸¦æƒå‘¨è½¬æ—¶é—´
         AverageWWT /= (double) n;
     }
 
-    //Êä³öÖÜ×ªÊ±¼ä¡¢´øÈ¨ÖÜ×ªÊ±¼ä¡¢Æ½¾ùÖÜ×ªÊ±¼ä¼°´øÈ¨Æ½¾ùÖÜ×ªÊ±¼ä
+    //è¾“å‡ºå‘¨è½¬æ—¶é—´ã€å¸¦æƒå‘¨è½¬æ—¶é—´ã€å¹³å‡å‘¨è½¬æ—¶é—´åŠå¸¦æƒå¹³å‡å‘¨è½¬æ—¶é—´
     void Print() {
-        cout << endl << left << setw(15) << "ÖÜ×ªĞÅÏ¢ÈçÏÂ±í£º" << endl;
+        cout << endl << left << setw(15) << "å‘¨è½¬ä¿¡æ¯å¦‚ä¸‹è¡¨ï¼š" << endl;
 
         cout << left << setw(15) << "";
         for (int i = 1; i <= n; i++) {
-            cout << right << setw(8) << "½ø³Ì" << setw(2) << i;
+            cout << right << setw(8) << "è¿›ç¨‹" << setw(2) << i;
         }
         cout << endl;
 
-        cout << left << setw(15) << "µ½´ïÊ±¼ä";
+        cout << left << setw(15) << "åˆ°è¾¾æ—¶é—´";
         for (int i = 1; i <= n; i++) {
             cout << right << setw(10) << progress[i].ArrivalTime;
         }
         cout << endl;
 
-        cout << left << setw(15) << "·şÎñÊ±¼ä";
+        cout << left << setw(15) << "æœåŠ¡æ—¶é—´";
         for (int i = 1; i <= n; i++) {
             cout << right << setw(10) << progress[i].ServiceTime;
         }
         cout << endl;
 
-        cout << left << setw(15) << "Íê³ÉÊ±¼ä";
+        cout << left << setw(15) << "å®Œæˆæ—¶é—´";
         for (int i = 1; i <= n; i++) {
             cout << right << setw(10) << progress[i].FinishedTime;
         }
         cout << endl;
 
-        cout << left << setw(15) << "ÖÜ×ªÊ±¼ä";
+        cout << left << setw(15) << "å‘¨è½¬æ—¶é—´";
         for (int i = 1; i <= n; i++) {
             cout << right << setw(10) << progress[i].WholeTime;
         }
-        cout << right << setw(30) << "Æ½¾ùÖÜ×ªÊ±¼ä:" << AverageWT << endl;
+        cout << right << setw(30) << "å¹³å‡å‘¨è½¬æ—¶é—´:" << AverageWT << endl;
 
-        cout << left << setw(15) << "´øÈ¨ÖÜ×ªÊ±¼ä";
+        cout << left << setw(15) << "å¸¦æƒå‘¨è½¬æ—¶é—´";
         for (int i = 1; i <= n; i++) {
             cout << right << setw(10) << progress[i].WeightWholeTime;
         }
-        cout << right << setw(30) << "Æ½¾ù´øÈ¨ÖÜ×ªÊ±¼ä:" << AverageWWT << endl;
+        cout << right << setw(30) << "å¹³å‡å¸¦æƒå‘¨è½¬æ—¶é—´:" << AverageWWT << endl;
     }
 
 

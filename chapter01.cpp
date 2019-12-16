@@ -7,94 +7,94 @@ using namespace std;
 class TimeCal {
 public:
 
-    int n;//½ø³ÌÊı
-    int ArrivalTime[MaxNum];//½ø³Ìµ½´ïÊ±¼äT[i]
-    int ServiceTime[MaxNum];//½ø³Ì·şÎñÊ±¼äS[i]
-    int FinishTime[MaxNum];//Íê³ÉÊ±¼ä
-    int WholeTime[MaxNum];//ÖÜ×ªÊ±¼ä
-    double WeightWholeTime[MaxNum];//´øÈ¨ÖÜ×ªÊ±¼ä
-    double AverageWT = 0;//Æ½¾ùÖÜ×ªÊ±¼ä
-    double AverageWWT = 0;//Æ½¾ù´øÈ¨ÖÜ×ªÊ±¼ä
-    int isAlgorithm;//½ø³ÌËã·¨ÊäÈëÖµ£¬ÓÃÓÚÑéÖ¤ÊäÈë,1ÎªFCFS£¬2ÎªSJF
+    int n;//è¿›ç¨‹æ•°
+    int ArrivalTime[MaxNum];//è¿›ç¨‹åˆ°è¾¾æ—¶é—´T[i]
+    int ServiceTime[MaxNum];//è¿›ç¨‹æœåŠ¡æ—¶é—´S[i]
+    int FinishTime[MaxNum];//å®Œæˆæ—¶é—´
+    int WholeTime[MaxNum];//å‘¨è½¬æ—¶é—´
+    double WeightWholeTime[MaxNum];//å¸¦æƒå‘¨è½¬æ—¶é—´
+    double AverageWT = 0;//å¹³å‡å‘¨è½¬æ—¶é—´
+    double AverageWWT = 0;//å¹³å‡å¸¦æƒå‘¨è½¬æ—¶é—´
+    int isAlgorithm;//è¿›ç¨‹ç®—æ³•è¾“å…¥å€¼ï¼Œç”¨äºéªŒè¯è¾“å…¥,1ä¸ºFCFSï¼Œ2ä¸ºSJF
 
-    //ÊäÈë½ø³ÌĞÅÏ¢
-    //½«ÊäÈëµÄArrivalTimeĞÅÏ¢ÓëServiceTimeĞÅÏ¢´æ´¢½øÊı×é
+    //è¾“å…¥è¿›ç¨‹ä¿¡æ¯
+    //å°†è¾“å…¥çš„ArrivalTimeä¿¡æ¯ä¸ServiceTimeä¿¡æ¯å­˜å‚¨è¿›æ•°ç»„
     void InputProcess() {
-        cout << "ÇëÊäÈë½ø³ÌÊıÁ¿£º";
+        cout << "è¯·è¾“å…¥è¿›ç¨‹æ•°é‡ï¼š";
         cin >> n;
         for (int i = 1; i <= n; i++) {
-            cout << "ÇëÊäÈë½ø³Ì" << i << "µÄµ½´ïÊ±¼äArrivalTime[" << i << "]£º";
+            cout << "è¯·è¾“å…¥è¿›ç¨‹" << i << "çš„åˆ°è¾¾æ—¶é—´ArrivalTime[" << i << "]ï¼š";
             cin >> ArrivalTime[i];
-            cout << "ÇëÊäÈë½ø³Ì" << i << "µÄ·şÎñÊ±¼äServiceTime[" << i << "]£º";
+            cout << "è¯·è¾“å…¥è¿›ç¨‹" << i << "çš„æœåŠ¡æ—¶é—´ServiceTime[" << i << "]ï¼š";
             cin >> ServiceTime[i];
         }
     }
 
-    //»ñÈ¡Ëã·¨Ñ¡ÔñÊäÈë
+    //è·å–ç®—æ³•é€‰æ‹©è¾“å…¥
     void InputAlgorithm() {
-        cout << endl << "ÇëÑ¡ÔñÏëÒªÏÈÊ¹ÓÃµÄËã·¨£¨1-FCFS£¬2-SJF)£º";
+        cout << endl << "è¯·é€‰æ‹©æƒ³è¦å…ˆä½¿ç”¨çš„ç®—æ³•ï¼ˆ1-FCFSï¼Œ2-SJF)ï¼š";
         cin >> isAlgorithm;
         IsAlgorithm();
     }
 
-    //Ëã·¨´æ´¢
+    //ç®—æ³•å­˜å‚¨
     void IsAlgorithm() {
         if (isAlgorithm == 1) {
-            cout << endl << "ÄúÑ¡ÔñµÄÊÇ1-FCFSËã·¨" << endl;
+            cout << endl << "æ‚¨é€‰æ‹©çš„æ˜¯1-FCFSç®—æ³•" << endl;
         } else if (isAlgorithm == 2) {
-            cout << endl << "ÄúÑ¡ÔñµÄÊÇ2-SJFËã·¨" << endl;
+            cout << endl << "æ‚¨é€‰æ‹©çš„æ˜¯2-SJFç®—æ³•" << endl;
         } else {
-            cout << "Ëã·¨Öµ" << isAlgorithm << "ÓĞÎó,ÇëÖØĞÂÊäÈëÕıÈ·µÄËã·¨ÀàĞÍ£¨1-FCFS£¬2-SJF£©" << endl;
+            cout << "ç®—æ³•å€¼" << isAlgorithm << "æœ‰è¯¯,è¯·é‡æ–°è¾“å…¥æ­£ç¡®çš„ç®—æ³•ç±»å‹ï¼ˆ1-FCFSï¼Œ2-SJFï¼‰" << endl;
             InputAlgorithm();
         }
     }
 
-    //µ÷ÓÃFCFSËã·¨½øĞĞµ÷¶È¼ÆËã
+    //è°ƒç”¨FCFSç®—æ³•è¿›è¡Œè°ƒåº¦è®¡ç®—
     void AlgorithmFCFS() {
 
-        //³õÊ¼»¯FinishTime[0]
+        //åˆå§‹åŒ–FinishTime[0]
         FinishTime[0] = 0;
 
         for (int i = 1; i <= n; i++) {
-            //¼ÆËãÍê³ÉÊ±¼ä
+            //è®¡ç®—å®Œæˆæ—¶é—´
             FinishTime[i] = FinishTime[i - 1] + ServiceTime[i];
 
-            //¼ÆËãÖÜ×ªÊ±¼ä
+            //è®¡ç®—å‘¨è½¬æ—¶é—´
             WholeTime[i] = FinishTime[i] - ArrivalTime[i];
 
-            //¼ÆËã´øÈ¨ÖÜ×ªÊ±¼ä
+            //è®¡ç®—å¸¦æƒå‘¨è½¬æ—¶é—´
             WeightWholeTime[i] = (double) WholeTime[i] / ServiceTime[i];
 
-            //¼ÆËãÆ½¾ùÖÜ×ªÊ±¼ä
+            //è®¡ç®—å¹³å‡å‘¨è½¬æ—¶é—´
             AverageWT += WholeTime[i];
 
-            //¼ÆËãÆ½¾Ö´øÈ¨ÖÜ×ªÊ±¼ä
+            //è®¡ç®—å¹³å±€å¸¦æƒå‘¨è½¬æ—¶é—´
             AverageWWT += WeightWholeTime[i];
         }
         AverageWT = (double) AverageWT / n;
         AverageWWT = (double) AverageWWT / n;
     }
 
-    //µ÷ÓÃSJFËã·¨½øĞĞµ÷¶È¼ÆËã
+    //è°ƒç”¨SJFç®—æ³•è¿›è¡Œè°ƒåº¦è®¡ç®—
     void AlgorithmSJF() {
 
-        int QueueServiceTime[MaxNum];//ÅÅĞò·şÎñÊ±¼ä
-        int CopyServiceTime[MaxNum];//±¸·İ·şÎñÊ±¼ä
+        int QueueServiceTime[MaxNum];//æ’åºæœåŠ¡æ—¶é—´
+        int CopyServiceTime[MaxNum];//å¤‡ä»½æœåŠ¡æ—¶é—´
 
-        //³õÊ¼»¯QueueServiceTime
+        //åˆå§‹åŒ–QueueServiceTime
         for (int i = 1; i <= n; i++) {
             QueueServiceTime[i] = ServiceTime[i];
         }
 
-        //³õÊ¼»¯CopyServiceTime
+        //åˆå§‹åŒ–CopyServiceTime
         for (int i = 1; i <= n; i++) {
             CopyServiceTime[i] = ServiceTime[i];
         }
 
-        //¸øFinishTime[0]¸½³õÖµ
+        //ç»™FinishTime[0]é™„åˆå€¼
         FinishTime[0] = 0;
 
-        //´ÓĞ¡µ½´óÃ°ÅİÅÅĞòQueueServiceTime
+        //ä»å°åˆ°å¤§å†’æ³¡æ’åºQueueServiceTime
         for (int i = 1; i <= n; i++) {
             for (int j = 1; j <= n - i; j++) {
                 if (QueueServiceTime[j] > QueueServiceTime[j + 1]) {
@@ -105,14 +105,14 @@ public:
             }
         }
 
-        //¼ÆËãÍê³ÉÊ±¼ä
-        int temp = -1, old_process = 0, new_process = 0;//¶¨ÒåÔİ´æÖµ¡¢ÉÏÒ»¸ö½ø³Ì¡¢±¾½ø³Ì
+        //è®¡ç®—å®Œæˆæ—¶é—´
+        int temp = -1, old_process = 0, new_process = 0;//å®šä¹‰æš‚å­˜å€¼ã€ä¸Šä¸€ä¸ªè¿›ç¨‹ã€æœ¬è¿›ç¨‹
 
         for (int i = 1; i <= n; i++) {
 
             old_process = new_process;
 
-            //²éÕÒ·şÎñÊ±¼ä×î¶ÌµÄ½ø³Ì
+            //æŸ¥æ‰¾æœåŠ¡æ—¶é—´æœ€çŸ­çš„è¿›ç¨‹
             if (i != 1) {
                 for (int j = 1; j <= n; j++) {
                     if (QueueServiceTime[j] > 0 && ArrivalTime[j] <= FinishTime[old_process] + 1) {
@@ -121,7 +121,7 @@ public:
                         break;
                     }
                 }
-            } else//ÈôÎªµÚ1¸ö½ø³Ì£¬Ö±½Ó½øÈë¶ÓÁĞ£¬Íê³ÉÊ±¼ä¼´Îª·şÎñÊ±¼ä
+            } else//è‹¥ä¸ºç¬¬1ä¸ªè¿›ç¨‹ï¼Œç›´æ¥è¿›å…¥é˜Ÿåˆ—ï¼Œå®Œæˆæ—¶é—´å³ä¸ºæœåŠ¡æ—¶é—´
             {
                 for (int j = 1; j <= n; j++) {
                     if (QueueServiceTime[j] == ServiceTime[i]) {
@@ -132,7 +132,7 @@ public:
                 }
             }
 
-            //²éÕÒ¸Ã×î¶Ì·şÎñÊ±¼ä¶ÔÓ¦µÄ½ø³ÌºÅ
+            //æŸ¥æ‰¾è¯¥æœ€çŸ­æœåŠ¡æ—¶é—´å¯¹åº”çš„è¿›ç¨‹å·
             for (int j = 1; j <= n; j++) {
                 if (CopyServiceTime[j] == temp && CopyServiceTime[j] > 0) {
                     new_process = j;
@@ -141,7 +141,7 @@ public:
                 }
             }
 
-            //¼ÆËã´æ´¢Íê³ÉÊ±¼ä
+            //è®¡ç®—å­˜å‚¨å®Œæˆæ—¶é—´
             if (i != 1) {
                 FinishTime[new_process] = FinishTime[old_process] + temp;
             } else {
@@ -151,16 +151,16 @@ public:
         }
 
         for (int i = 1; i <= n; i++) {
-            //¼ÆËãÖÜ×ªÊ±¼ä
+            //è®¡ç®—å‘¨è½¬æ—¶é—´
             WholeTime[i] = FinishTime[i] - ArrivalTime[i];
 
-            //¼ÆËã´øÈ¨ÖÜ×ªÊ±¼ä
+            //è®¡ç®—å¸¦æƒå‘¨è½¬æ—¶é—´
             WeightWholeTime[i] = (double) WholeTime[i] / ServiceTime[i];
 
-            //¼ÆËãÆ½¾ùÖÜ×ªÊ±¼ä
+            //è®¡ç®—å¹³å‡å‘¨è½¬æ—¶é—´
             AverageWT += WholeTime[i];
 
-            //¼ÆËãÆ½¾Ö´øÈ¨ÖÜ×ªÊ±¼ä
+            //è®¡ç®—å¹³å±€å¸¦æƒå‘¨è½¬æ—¶é—´
             AverageWWT += WeightWholeTime[i];
         }
         cout << endl;
@@ -169,18 +169,18 @@ public:
         AverageWWT = (double) AverageWWT / n;
     }
 
-    //Êä³öµ÷¶È¹ı³Ì
+    //è¾“å‡ºè°ƒåº¦è¿‡ç¨‹
     void PrintSchedule() {
         int temp = 0;
-        int CopyFinishTime[MaxNum];//±¸·İ·şÎñÊ±¼ä
+        int CopyFinishTime[MaxNum];//å¤‡ä»½æœåŠ¡æ—¶é—´
 
-        //³õÊ¼»¯CopyServiceTime
+        //åˆå§‹åŒ–CopyServiceTime
         for (int i = 1; i <= n; i++) {
             CopyFinishTime[i] = FinishTime[i];
         }
 
-        if (FinishTime[1] >= 0)//ÅĞ¶ÏÊÇ·ñÒÑÓĞÊı¾İÊäÈë
-            //¸ù¾İÍê³ÉÊ±¼äÅÅĞòÊä³ö
+        if (FinishTime[1] >= 0)//åˆ¤æ–­æ˜¯å¦å·²æœ‰æ•°æ®è¾“å…¥
+            //æ ¹æ®å®Œæˆæ—¶é—´æ’åºè¾“å‡º
             for (int i = 1; i <= n; i++) {
 
                 if (i != 1) {
@@ -195,93 +195,93 @@ public:
                             }
                         }
                     }
-                    if (i != 2) { cout << "½ø³Ì" << temp << "¿ªÊ¼ÔËĞĞ" << endl; }
-                    cout << "Ê±¿Ì" << FinishTime[temp] + 1;
+                    if (i != 2) { cout << "è¿›ç¨‹" << temp << "å¼€å§‹è¿è¡Œ" << endl; }
+                    cout << "æ—¶åˆ»" << FinishTime[temp] + 1;
                     if (i == n) {
                         for (int j = 1; j < n; j++) {
                             if (CopyFinishTime[j] > 0) {
                                 temp = j;
                             }
                         }
-                        cout << "½ø³Ì" << temp << "¿ªÊ¼ÔËĞĞ" << endl << endl;
+                        cout << "è¿›ç¨‹" << temp << "å¼€å§‹è¿è¡Œ" << endl << endl;
                     }
                     CopyFinishTime[temp] = -1;
                     temp = 0;
                 } else {
-                    cout << "Ê±¿Ì0½ø³Ì" << i << "¿ªÊ¼ÔËĞĞ" << endl;
+                    cout << "æ—¶åˆ»0è¿›ç¨‹" << i << "å¼€å§‹è¿è¡Œ" << endl;
                 }
             }
     }
 
-    //Êä³öÖÜ×ªÊ±¼ä¡¢´øÈ¨ÖÜ×ªÊ±¼ä¡¢Æ½¾ùÖÜ×ªÊ±¼ä¼°´øÈ¨Æ½¾ùÖÜ×ªÊ±¼ä
+    //è¾“å‡ºå‘¨è½¬æ—¶é—´ã€å¸¦æƒå‘¨è½¬æ—¶é—´ã€å¹³å‡å‘¨è½¬æ—¶é—´åŠå¸¦æƒå¹³å‡å‘¨è½¬æ—¶é—´
     void Print() {
-        if (FinishTime[1] >= 0)//ÅĞ¶ÏÊÇ·ñÒÑÓĞÊı¾İÊäÈë
+        if (FinishTime[1] >= 0)//åˆ¤æ–­æ˜¯å¦å·²æœ‰æ•°æ®è¾“å…¥
         {
-            cout << left << setw(15) << "ÖÜ×ªĞÅÏ¢ÈçÏÂ±í£º" << endl;
+            cout << left << setw(15) << "å‘¨è½¬ä¿¡æ¯å¦‚ä¸‹è¡¨ï¼š" << endl;
 
             cout << left << setw(15) << "";
             for (int i = 1; i <= n; i++) {
-                cout << right << setw(8) << "½ø³Ì" << setw(2) << i;
+                cout << right << setw(8) << "è¿›ç¨‹" << setw(2) << i;
             }
             cout << endl;
 
-            cout << left << setw(15) << "µ½´ïÊ±¼ä";
+            cout << left << setw(15) << "åˆ°è¾¾æ—¶é—´";
             for (int i = 1; i <= n; i++) {
                 cout << right << setw(10) << ArrivalTime[i];
             }
             cout << endl;
 
-            cout << left << setw(15) << "·şÎñÊ±¼ä";
+            cout << left << setw(15) << "æœåŠ¡æ—¶é—´";
             for (int i = 1; i <= n; i++) {
                 cout << right << setw(10) << ServiceTime[i];
             }
             cout << endl;
 
-            cout << left << setw(15) << "Íê³ÉÊ±¼ä";
+            cout << left << setw(15) << "å®Œæˆæ—¶é—´";
             for (int i = 1; i <= n; i++) {
                 cout << right << setw(10) << FinishTime[i];
             }
             cout << endl;
 
-            cout << left << setw(15) << "ÖÜ×ªÊ±¼ä";
+            cout << left << setw(15) << "å‘¨è½¬æ—¶é—´";
             for (int i = 1; i <= n; i++) {
                 cout << right << setw(10) << WholeTime[i];
             }
-            cout << right << setw(20) << "Æ½¾ùÖÜ×ªÊ±¼ä:" << setw(10) << AverageWT << endl;
+            cout << right << setw(20) << "å¹³å‡å‘¨è½¬æ—¶é—´:" << setw(10) << AverageWT << endl;
 
-            cout << left << setw(15) << "´øÈ¨ÖÜ×ªÊ±¼ä";
+            cout << left << setw(15) << "å¸¦æƒå‘¨è½¬æ—¶é—´";
             for (int i = 1; i <= n; i++) {
                 cout << right << setw(10) << WeightWholeTime[i];
             }
-            cout << right << setw(20) << "Æ½¾ù´øÈ¨ÖÜ×ªÊ±¼ä:" << setw(10) << AverageWWT << endl;
+            cout << right << setw(20) << "å¹³å‡å¸¦æƒå‘¨è½¬æ—¶é—´:" << setw(10) << AverageWWT << endl;
         }
     }
 };
 
 
 int main() {
-    //´´½¨TimeCalÀà
+    //åˆ›å»ºTimeCalç±»
     TimeCal timeCal{};
 
-    //ÊäÈë½ø³ÌĞÅÏ¢
-    //½«ÊäÈëµÄArrivalTimeĞÅÏ¢ÓëServiceTimeĞÅÏ¢´æ´¢½øÊı×é
+    //è¾“å…¥è¿›ç¨‹ä¿¡æ¯
+    //å°†è¾“å…¥çš„ArrivalTimeä¿¡æ¯ä¸ServiceTimeä¿¡æ¯å­˜å‚¨è¿›æ•°ç»„
     timeCal.InputProcess();
 
-    //»ñÈ¡Ëã·¨Ñ¡ÔñÊäÈë
+    //è·å–ç®—æ³•é€‰æ‹©è¾“å…¥
     timeCal.InputAlgorithm();
 
-    if (timeCal.isAlgorithm == 1)    //µ÷ÓÃFCFSËã·¨½øĞĞµ÷¶È¼ÆËã
+    if (timeCal.isAlgorithm == 1)    //è°ƒç”¨FCFSç®—æ³•è¿›è¡Œè°ƒåº¦è®¡ç®—
     {
         timeCal.AlgorithmFCFS();
-    } else//µ÷ÓÃSJFËã·¨½øĞĞµ÷¶È¼ÆËã
+    } else//è°ƒç”¨SJFç®—æ³•è¿›è¡Œè°ƒåº¦è®¡ç®—
     {
         timeCal.AlgorithmSJF();
     }
 
-    //Êä³öµ÷¶È¹ı³Ì
+    //è¾“å‡ºè°ƒåº¦è¿‡ç¨‹
     timeCal.PrintSchedule();
 
-    //Êä³öÖÜ×ªÊ±¼ä¡¢´øÈ¨ÖÜ×ªÊ±¼ä¡¢Æ½¾ùÖÜ×ªÊ±¼ä¼°´øÈ¨Æ½¾ùÖÜ×ªÊ±¼ä
+    //è¾“å‡ºå‘¨è½¬æ—¶é—´ã€å¸¦æƒå‘¨è½¬æ—¶é—´ã€å¹³å‡å‘¨è½¬æ—¶é—´åŠå¸¦æƒå¹³å‡å‘¨è½¬æ—¶é—´
     timeCal.Print();
 
     return 0;

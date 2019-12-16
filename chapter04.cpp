@@ -7,37 +7,37 @@ using namespace std;
 class PartitionAlgorithm {
 public:
 
-    int FreePartition[MaxNumber];//¿ÕÏĞ·ÖÇø´óĞ¡
-    int PartitionNum;//¿ÕÏĞ·ÖÇø¸öÊı
-    int ProcessNum;//½ø³Ì¸öÊı
-    int isAlgorithm;//Ëã·¨Ñ¡Ôñ
+    int FreePartition[MaxNumber];//ç©ºé—²åˆ†åŒºå¤§å°
+    int PartitionNum;//ç©ºé—²åˆ†åŒºä¸ªæ•°
+    int ProcessNum;//è¿›ç¨‹ä¸ªæ•°
+    int isAlgorithm;//ç®—æ³•é€‰æ‹©
 
-    //¶¨Òå½ø³ÌµÄÊı¾İ½á¹¹
+    //å®šä¹‰è¿›ç¨‹çš„æ•°æ®ç»“æ„
     typedef struct {
-        int FirstPartition;//Ê×´ÎÊÊÓ¦·ÖÇø
-        int CycleFirstPartition;//Ñ­»·Ê×´ÎÊÊÓ¦·ÖÇø
-        int BestPartition;//×î¼ÑÊÊÓ¦·ÖÇø
-        int WorstPartition;//×î»µÊÊÓ¦·ÖÇø
-        int ProcessNeed;//½ø³ÌĞèÒªµÄ·ÖÇø´óĞ¡
+        int FirstPartition;//é¦–æ¬¡é€‚åº”åˆ†åŒº
+        int CycleFirstPartition;//å¾ªç¯é¦–æ¬¡é€‚åº”åˆ†åŒº
+        int BestPartition;//æœ€ä½³é€‚åº”åˆ†åŒº
+        int WorstPartition;//æœ€åé€‚åº”åˆ†åŒº
+        int ProcessNeed;//è¿›ç¨‹éœ€è¦çš„åˆ†åŒºå¤§å°
     } Progress;
 
     Progress progress[MaxNumber];
 
-    //ÊäÈë¿ÕÏĞ·ÖÇøÊı¡¢¿ÕÏĞµÄ·ÖÇø´óĞ¡¡¢½ø³ÌÊı¡¢½ø³ÌĞèÒªµÄ·ÖÇø´óĞ¡
+    //è¾“å…¥ç©ºé—²åˆ†åŒºæ•°ã€ç©ºé—²çš„åˆ†åŒºå¤§å°ã€è¿›ç¨‹æ•°ã€è¿›ç¨‹éœ€è¦çš„åˆ†åŒºå¤§å°
     void Input() {
-        cout << "ÇëÊäÈë¿ÕÏĞ·ÖÇø¸öÊıPartitionNum£º";
+        cout << "è¯·è¾“å…¥ç©ºé—²åˆ†åŒºä¸ªæ•°PartitionNumï¼š";
         cin >> PartitionNum;
 
         for (int i = 1; i <= PartitionNum; i++) {
-            cout << "ÇëÊäÈë¿ÕÏĞ·ÖÇø" << i << "´óĞ¡" << "FreePartition[" << i << "]£º";
+            cout << "è¯·è¾“å…¥ç©ºé—²åˆ†åŒº" << i << "å¤§å°" << "FreePartition[" << i << "]ï¼š";
             cin >> FreePartition[i];
         }
 
-        cout << "ÇëÊäÈë½ø³Ì¸öÊıProcessNum£º";
+        cout << "è¯·è¾“å…¥è¿›ç¨‹ä¸ªæ•°ProcessNumï¼š";
         cin >> ProcessNum;
 
         for (int i = 1; i <= ProcessNum; i++) {
-            cout << "ÇëÊäÈë½ø³Ì" << i << "ĞèÒªµÄ·ÖÇø´óĞ¡" << "progress[" << i << "].ProcessNeed£º";
+            cout << "è¯·è¾“å…¥è¿›ç¨‹" << i << "éœ€è¦çš„åˆ†åŒºå¤§å°" << "progress[" << i << "].ProcessNeedï¼š";
             cin >> progress[i].ProcessNeed;
         }
 
@@ -46,67 +46,67 @@ public:
         InputAlgorithm();
     }
 
-    //»ñÈ¡Ëã·¨Ñ¡ÔñÊäÈë
+    //è·å–ç®—æ³•é€‰æ‹©è¾“å…¥
     void InputAlgorithm() {
         cout << endl
-             << "ÇëÑ¡ÔñÏëÒªÏÈÊ¹ÓÃµÄËã·¨£¨1-Ê×´ÎÊÊÓ¦·ÖÇøËã·¨£¨FirstPartition£©£¬2-Ñ­»·Ê×´ÎÊÊÓ¦·ÖÇøËã·¨£¨CycleFirstPartition£©£¬3-×î¼ÑÊÊÓ¦·ÖÇøËã·¨£¨BestPartition£©£¬4-×î»µÊÊÓ¦·ÖÇøËã·¨£¨WorstPartition£©£©£º";
+             << "è¯·é€‰æ‹©æƒ³è¦å…ˆä½¿ç”¨çš„ç®—æ³•ï¼ˆ1-é¦–æ¬¡é€‚åº”åˆ†åŒºç®—æ³•ï¼ˆFirstPartitionï¼‰ï¼Œ2-å¾ªç¯é¦–æ¬¡é€‚åº”åˆ†åŒºç®—æ³•ï¼ˆCycleFirstPartitionï¼‰ï¼Œ3-æœ€ä½³é€‚åº”åˆ†åŒºç®—æ³•ï¼ˆBestPartitionï¼‰ï¼Œ4-æœ€åé€‚åº”åˆ†åŒºç®—æ³•ï¼ˆWorstPartitionï¼‰ï¼‰ï¼š";
         cin >> isAlgorithm;
         IsAlgorithm();
     }
 
-    //Ëã·¨´æ´¢È·ÈÏ
+    //ç®—æ³•å­˜å‚¨ç¡®è®¤
     void IsAlgorithm() {
         switch (isAlgorithm) {
             case 1:
-                cout << endl << "ÄúÑ¡ÔñµÄÊÇ1-Ê×´ÎÊÊÓ¦·ÖÇøËã·¨£¨FirstPartition£©" << endl;
+                cout << endl << "æ‚¨é€‰æ‹©çš„æ˜¯1-é¦–æ¬¡é€‚åº”åˆ†åŒºç®—æ³•ï¼ˆFirstPartitionï¼‰" << endl;
                 AlgorithmFirstPartition();
                 break;
             case 2:
-                cout << endl << "ÄúÑ¡ÔñµÄÊÇ2-Ñ­»·Ê×´ÎÊÊÓ¦·ÖÇøËã·¨£¨CycleFirstPartition£©" << endl;
+                cout << endl << "æ‚¨é€‰æ‹©çš„æ˜¯2-å¾ªç¯é¦–æ¬¡é€‚åº”åˆ†åŒºç®—æ³•ï¼ˆCycleFirstPartitionï¼‰" << endl;
                 AlgorithmCycleFirstPartitionS();
                 break;
             case 3:
-                cout << endl << "ÄúÑ¡ÔñµÄÊÇ3-×î¼ÑÊÊÓ¦·ÖÇøËã·¨£¨BestPartition£©" << endl;
+                cout << endl << "æ‚¨é€‰æ‹©çš„æ˜¯3-æœ€ä½³é€‚åº”åˆ†åŒºç®—æ³•ï¼ˆBestPartitionï¼‰" << endl;
                 AlgorithmBestPartition();
                 break;
             case 4:
-                cout << endl << "ÄúÑ¡ÔñµÄÊÇ4-×î»µÊÊÓ¦·ÖÇøËã·¨£¨WorstPartition£©" << endl;
+                cout << endl << "æ‚¨é€‰æ‹©çš„æ˜¯4-æœ€åé€‚åº”åˆ†åŒºç®—æ³•ï¼ˆWorstPartitionï¼‰" << endl;
                 AlgorithmWorstPartition();
                 break;
             default:
-                cout << "Ëã·¨Öµ£º" << isAlgorithm
-                     << "ÓĞÎó,ÇëÖØĞÂÊäÈëÕıÈ·µÄËã·¨ÀàĞÍ£¨1-Ê×´ÎÊÊÓ¦·ÖÇøËã·¨£¨FirstPartition£©£¬2-Ñ­»·Ê×´ÎÊÊÓ¦·ÖÇøËã·¨£¨CycleFirstPartition£©£¬3-×î¼ÑÊÊÓ¦·ÖÇøËã·¨£¨BestPartition£©£¬4-×î»µÊÊÓ¦·ÖÇøËã·¨£¨WorstPartition£©£©"
+                cout << "ç®—æ³•å€¼ï¼š" << isAlgorithm
+                     << "æœ‰è¯¯,è¯·é‡æ–°è¾“å…¥æ­£ç¡®çš„ç®—æ³•ç±»å‹ï¼ˆ1-é¦–æ¬¡é€‚åº”åˆ†åŒºç®—æ³•ï¼ˆFirstPartitionï¼‰ï¼Œ2-å¾ªç¯é¦–æ¬¡é€‚åº”åˆ†åŒºç®—æ³•ï¼ˆCycleFirstPartitionï¼‰ï¼Œ3-æœ€ä½³é€‚åº”åˆ†åŒºç®—æ³•ï¼ˆBestPartitionï¼‰ï¼Œ4-æœ€åé€‚åº”åˆ†åŒºç®—æ³•ï¼ˆWorstPartitionï¼‰ï¼‰"
                      << endl;
                 InputAlgorithm();
         }
     }
 
-    //Êä³ö¿ÕÏĞ·ÖÇøÊ£ÓàÇé¿ö¡¢¸÷½ø³Ì·ÖÅäÇé¿ö
+    //è¾“å‡ºç©ºé—²åˆ†åŒºå‰©ä½™æƒ…å†µã€å„è¿›ç¨‹åˆ†é…æƒ…å†µ
     void Print(Progress pg[MaxNumber], int fp[MaxNumber]) {
 
-        cout << endl << left << setw(15) << "½ø³Ì·ÖÅäÇé¿öÈçÏÂ±í£º" << endl;
+        cout << endl << left << setw(15) << "è¿›ç¨‹åˆ†é…æƒ…å†µå¦‚ä¸‹è¡¨ï¼š" << endl;
 
-        //·ÖÇø×´¿ö
+        //åˆ†åŒºçŠ¶å†µ
         cout << left << setw(15) << "";
         for (int i = 1; i <= PartitionNum; i++) {
-            cout << right << setw(8) << "·ÖÇø" << setw(2) << i;
+            cout << right << setw(8) << "åˆ†åŒº" << setw(2) << i;
         }
-        cout << endl << left << setw(15) << "ÒÑ·ÖÅäÈİÁ¿";
+        cout << endl << left << setw(15) << "å·²åˆ†é…å®¹é‡";
         for (int i = 1; i <= PartitionNum; i++) {
             cout << right << setw(10) << FreePartition[i] - fp[i];
         }
-        cout << endl << left << setw(15) << "Ê£ÓàÈİÁ¿";
+        cout << endl << left << setw(15) << "å‰©ä½™å®¹é‡";
         for (int i = 1; i <= PartitionNum; i++) {
             cout << right << setw(10) << fp[i];
         }
         cout << endl;
 
-        //½ø³Ì·ÖÅä×´¿ö
+        //è¿›ç¨‹åˆ†é…çŠ¶å†µ
         cout << left << setw(15) << "";
         for (int i = 1; i <= ProcessNum; i++) {
-            cout << right << setw(8) << "½ø³Ì" << setw(2) << i;
+            cout << right << setw(8) << "è¿›ç¨‹" << setw(2) << i;
         }
-        cout << endl << left << setw(15) << "Ëù·ÖÅä·ÖÇøºÅ";
+        cout << endl << left << setw(15) << "æ‰€åˆ†é…åˆ†åŒºå·";
         for (int i = 1; i <= ProcessNum; i++) {
             switch (isAlgorithm) {
                 case 1:
@@ -127,21 +127,21 @@ public:
 
     }
 
-    //µ÷ÓÃFirstPartitionËã·¨½øĞĞµ÷¶È¼ÆËã
+    //è°ƒç”¨FirstPartitionç®—æ³•è¿›è¡Œè°ƒåº¦è®¡ç®—
     void AlgorithmFirstPartition() {
-        //¸´ÖÆ½ø³Ì
+        //å¤åˆ¶è¿›ç¨‹
         Progress progressCopy[MaxNumber];
         for (int i = 1; i <= ProcessNum; i++) {
             progressCopy[i] = progress[i];
         }
 
-        //¸´ÖÆ¿ÕÏĞ·ÖÇø´óĞ¡
-        int freePartition[MaxNumber];//¿ÕÏĞ·ÖÇø´óĞ¡
+        //å¤åˆ¶ç©ºé—²åˆ†åŒºå¤§å°
+        int freePartition[MaxNumber];//ç©ºé—²åˆ†åŒºå¤§å°
         for (int i = 1; i <= PartitionNum; i++) {
             freePartition[i] = FreePartition[i];
         }
 
-        //½ø³Ì·ÖÅä
+        //è¿›ç¨‹åˆ†é…
         for (int i = 1; i <= ProcessNum; i++) {
             for (int j = 1; j <= PartitionNum; j++) {
                 if (freePartition[j] >= progressCopy[i].ProcessNeed) {
@@ -159,21 +159,21 @@ public:
         NextAlgorithm();
     }
 
-    //µ÷ÓÃCycleFirstPartitionËã·¨½øĞĞµ÷¶È¼ÆËã
+    //è°ƒç”¨CycleFirstPartitionç®—æ³•è¿›è¡Œè°ƒåº¦è®¡ç®—
     void AlgorithmCycleFirstPartitionS() {
-        //¸´ÖÆ½ø³Ì
+        //å¤åˆ¶è¿›ç¨‹
         Progress progressCopy[MaxNumber];
         for (int i = 1; i <= ProcessNum; i++) {
             progressCopy[i] = progress[i];
         }
 
-        //¸´ÖÆ¿ÕÏĞ·ÖÇø´óĞ¡
-        int freePartition[MaxNumber];//¿ÕÏĞ·ÖÇø´óĞ¡
+        //å¤åˆ¶ç©ºé—²åˆ†åŒºå¤§å°
+        int freePartition[MaxNumber];//ç©ºé—²åˆ†åŒºå¤§å°
         for (int i = 1; i <= PartitionNum; i++) {
             freePartition[i] = FreePartition[i];
         }
 
-        //½ø³Ì·ÖÅä
+        //è¿›ç¨‹åˆ†é…
         int i = 1;
         while (i <= ProcessNum) {
             for (int j = 1; j <= PartitionNum; j++) {
@@ -198,21 +198,21 @@ public:
         NextAlgorithm();
     }
 
-    //µ÷ÓÃBestPartitionËã·¨½øĞĞµ÷¶È¼ÆËã
+    //è°ƒç”¨BestPartitionç®—æ³•è¿›è¡Œè°ƒåº¦è®¡ç®—
     void AlgorithmBestPartition() {
-        //¸´ÖÆ½ø³Ì
+        //å¤åˆ¶è¿›ç¨‹
         Progress progressCopy[MaxNumber];
         for (int i = 1; i <= ProcessNum; i++) {
             progressCopy[i] = progress[i];
         }
 
-        //¸´ÖÆ¿ÕÏĞ·ÖÇø´óĞ¡
-        int freePartition[MaxNumber];//¿ÕÏĞ·ÖÇø´óĞ¡
+        //å¤åˆ¶ç©ºé—²åˆ†åŒºå¤§å°
+        int freePartition[MaxNumber];//ç©ºé—²åˆ†åŒºå¤§å°
         for (int i = 1; i <= PartitionNum; i++) {
             freePartition[i] = FreePartition[i];
         }
 
-        //½ø³Ì·ÖÅä
+        //è¿›ç¨‹åˆ†é…
         for (int i = 1; i <= ProcessNum; i++) {
             for (int j = 1; j <= PartitionNum; j++) {
                 if (freePartition[AscendingBubbleSort(freePartition, j)] >= progressCopy[i].ProcessNeed) {
@@ -232,15 +232,15 @@ public:
 
     }
 
-    //¸¨ÖúËã·¨£ºÉıĞòÃ°ÅİÅÅĞòËã·¨£¬½«·ÖÇøÊ£Óà´óĞ¡´ÓĞ¡µ½´óÃ°ÅİÅÅĞò£¬·µ»Ø¸ÃindexÅÅĞòµÄÖµ
+    //è¾…åŠ©ç®—æ³•ï¼šå‡åºå†’æ³¡æ’åºç®—æ³•ï¼Œå°†åˆ†åŒºå‰©ä½™å¤§å°ä»å°åˆ°å¤§å†’æ³¡æ’åºï¼Œè¿”å›è¯¥indexæ’åºçš„å€¼
     int AscendingBubbleSort(const int freePartition[MaxNumber], int index) {
-        //¸´ÖÆ¿ÕÏĞ·ÖÇø
-        int freePartitionCopy[MaxNumber];//¿ÕÏĞ·ÖÇø´óĞ¡
+        //å¤åˆ¶ç©ºé—²åˆ†åŒº
+        int freePartitionCopy[MaxNumber];//ç©ºé—²åˆ†åŒºå¤§å°
         for (int i = 1; i <= PartitionNum; i++) {
             freePartitionCopy[i] = freePartition[i];
         }
 
-        //½«·ÖÇøÊ£Óà´óĞ¡´ÓĞ¡µ½´óÃ°ÅİÅÅĞò
+        //å°†åˆ†åŒºå‰©ä½™å¤§å°ä»å°åˆ°å¤§å†’æ³¡æ’åº
         for (int i = 1; i <= PartitionNum; i++) {
             for (int j = 1; j <= PartitionNum - i; j++) {
                 if (freePartitionCopy[j] > freePartitionCopy[j + 1]) {
@@ -251,7 +251,7 @@ public:
             }
         }
 
-        //²éÕÒ¸Ã×î¶Ì·şÎñÊ±¼ä¶ÔÓ¦µÄ½ø³ÌºÅ
+        //æŸ¥æ‰¾è¯¥æœ€çŸ­æœåŠ¡æ—¶é—´å¯¹åº”çš„è¿›ç¨‹å·
         for (int j = 1; j <= PartitionNum; j++) {
             if (freePartition[j] == freePartitionCopy[index]) {
                 return j;
@@ -261,21 +261,21 @@ public:
         return 0;
     }
 
-    //µ÷ÓÃWorstPartitionËã·¨½øĞĞµ÷¶È¼ÆËã
+    //è°ƒç”¨WorstPartitionç®—æ³•è¿›è¡Œè°ƒåº¦è®¡ç®—
     void AlgorithmWorstPartition() {
-        //¸´ÖÆ½ø³Ì
+        //å¤åˆ¶è¿›ç¨‹
         Progress progressCopy[MaxNumber];
         for (int i = 1; i <= ProcessNum; i++) {
             progressCopy[i] = progress[i];
         }
 
-        //¸´ÖÆ¿ÕÏĞ·ÖÇø´óĞ¡
-        int freePartition[MaxNumber];//¿ÕÏĞ·ÖÇø´óĞ¡
+        //å¤åˆ¶ç©ºé—²åˆ†åŒºå¤§å°
+        int freePartition[MaxNumber];//ç©ºé—²åˆ†åŒºå¤§å°
         for (int i = 1; i <= PartitionNum; i++) {
             freePartition[i] = FreePartition[i];
         }
 
-        //½ø³Ì·ÖÅä
+        //è¿›ç¨‹åˆ†é…
         for (int i = 1; i <= ProcessNum; i++) {
             for (int j = 1; j <= PartitionNum; j++) {
                 if (freePartition[DescendingBubbleSort(freePartition, j)] >= progressCopy[i].ProcessNeed) {
@@ -293,15 +293,15 @@ public:
         NextAlgorithm();
     }
 
-    //¸¨ÖúËã·¨£º½µĞòÃ°ÅİÅÅĞòËã·¨£¬½«·ÖÇøÊ£Óà´óĞ¡´Ó´óµ½Ğ¡Ã°ÅİÅÅĞò£¬·µ»Ø¸ÃindexÅÅĞòµÄÖµ
+    //è¾…åŠ©ç®—æ³•ï¼šé™åºå†’æ³¡æ’åºç®—æ³•ï¼Œå°†åˆ†åŒºå‰©ä½™å¤§å°ä»å¤§åˆ°å°å†’æ³¡æ’åºï¼Œè¿”å›è¯¥indexæ’åºçš„å€¼
     int DescendingBubbleSort(const int freePartition[MaxNumber], int index) {
-        //¸´ÖÆ¿ÕÏĞ·ÖÇø
-        int freePartitionCopy[MaxNumber];//¿ÕÏĞ·ÖÇø´óĞ¡
+        //å¤åˆ¶ç©ºé—²åˆ†åŒº
+        int freePartitionCopy[MaxNumber];//ç©ºé—²åˆ†åŒºå¤§å°
         for (int i = 1; i <= PartitionNum; i++) {
             freePartitionCopy[i] = freePartition[i];
         }
 
-        //½«·ÖÇøÊ£Óà´óĞ¡´Ó´óµ½Ğ¡Ã°ÅİÅÅĞò
+        //å°†åˆ†åŒºå‰©ä½™å¤§å°ä»å¤§åˆ°å°å†’æ³¡æ’åº
         for (int i = 1; i <= PartitionNum; i++) {
             for (int j = 1; j <= PartitionNum - i; j++) {
                 if (freePartitionCopy[j] < freePartitionCopy[j + 1]) {
@@ -312,7 +312,7 @@ public:
             }
         }
 
-        //²éÕÒ¸Ã×î¶Ì·şÎñÊ±¼ä¶ÔÓ¦µÄ½ø³ÌºÅ
+        //æŸ¥æ‰¾è¯¥æœ€çŸ­æœåŠ¡æ—¶é—´å¯¹åº”çš„è¿›ç¨‹å·
         for (int j = 1; j <= PartitionNum; j++) {
             if (freePartition[j] == freePartitionCopy[index]) {
                 return j;
@@ -322,13 +322,13 @@ public:
         return 0;
     }
 
-    //ÑéÖ¤·½·¨£ºÑéÖ¤¿ÕÏĞ·ÖÇøÊÇ·ñ×ã¹»·ÖÅä
+    //éªŒè¯æ–¹æ³•ï¼šéªŒè¯ç©ºé—²åˆ†åŒºæ˜¯å¦è¶³å¤Ÿåˆ†é…
     void Test(Progress pg[MaxNumber]) {
         switch (isAlgorithm) {
             case 1:
                 for (int i = 1; i <= ProcessNum; i++) {
                     if (pg[i].FirstPartition < 0) {
-                        cout << "¿ÕÏĞ·ÖÇø²»×ã±¾Ëã·¨·ÖÅä" << endl;
+                        cout << "ç©ºé—²åˆ†åŒºä¸è¶³æœ¬ç®—æ³•åˆ†é…" << endl;
                         exit(0);
                     }
                 }
@@ -336,7 +336,7 @@ public:
             case 2:
                 for (int i = 1; i <= ProcessNum; i++) {
                     if (pg[i].CycleFirstPartition < 0) {
-                        cout << "¿ÕÏĞ·ÖÇø²»×ã±¾Ëã·¨·ÖÅä" << endl;
+                        cout << "ç©ºé—²åˆ†åŒºä¸è¶³æœ¬ç®—æ³•åˆ†é…" << endl;
                         exit(0);
                     }
                 }
@@ -344,7 +344,7 @@ public:
             case 3:
                 for (int i = 1; i <= ProcessNum; i++) {
                     if (pg[i].BestPartition < 0) {
-                        cout << "¿ÕÏĞ·ÖÇø²»×ã±¾Ëã·¨·ÖÅä" << endl;
+                        cout << "ç©ºé—²åˆ†åŒºä¸è¶³æœ¬ç®—æ³•åˆ†é…" << endl;
                         exit(0);
                     }
                 }
@@ -352,7 +352,7 @@ public:
             case 4:
                 for (int i = 1; i <= ProcessNum; i++) {
                     if (pg[i].WorstPartition < 0) {
-                        cout << "¿ÕÏĞ·ÖÇø²»×ã±¾Ëã·¨·ÖÅä" << endl;
+                        cout << "ç©ºé—²åˆ†åŒºä¸è¶³æœ¬ç®—æ³•åˆ†é…" << endl;
                         exit(0);
                     }
                 }
@@ -360,10 +360,10 @@ public:
         }
     }
 
-    //Ñ¯ÎÊÊÇ·ñ»¹Òª½øĞĞÆäÓàËã·¨
+    //è¯¢é—®æ˜¯å¦è¿˜è¦è¿›è¡Œå…¶ä½™ç®—æ³•
     void NextAlgorithm() {
         cout << endl
-             << "ÇëÎÊÊÇ·ñ»¹Òª½øĞĞÆäÓàËã·¨£¬ÈôÊÇ£¬ÇëÊäÈë£¨1-4Öµ£©£»Èô·ñ£¬ÇëÊäÈëÈÎÒâ×Ö·û£¨1-Ê×´ÎÊÊÓ¦·ÖÇøËã·¨£¨FirstPartition£©£¬2-Ñ­»·Ê×´ÎÊÊÓ¦·ÖÇøËã·¨£¨CycleFirstPartition£©£¬3-×î¼ÑÊÊÓ¦·ÖÇøËã·¨£¨BestPartition£©£¬4-×î»µÊÊÓ¦·ÖÇøËã·¨£¨WorstPartition£©£©£º";
+             << "è¯·é—®æ˜¯å¦è¿˜è¦è¿›è¡Œå…¶ä½™ç®—æ³•ï¼Œè‹¥æ˜¯ï¼Œè¯·è¾“å…¥ï¼ˆ1-4å€¼ï¼‰ï¼›è‹¥å¦ï¼Œè¯·è¾“å…¥ä»»æ„å­—ç¬¦ï¼ˆ1-é¦–æ¬¡é€‚åº”åˆ†åŒºç®—æ³•ï¼ˆFirstPartitionï¼‰ï¼Œ2-å¾ªç¯é¦–æ¬¡é€‚åº”åˆ†åŒºç®—æ³•ï¼ˆCycleFirstPartitionï¼‰ï¼Œ3-æœ€ä½³é€‚åº”åˆ†åŒºç®—æ³•ï¼ˆBestPartitionï¼‰ï¼Œ4-æœ€åé€‚åº”åˆ†åŒºç®—æ³•ï¼ˆWorstPartitionï¼‰ï¼‰ï¼š";
         cin >> isAlgorithm;
         if (isAlgorithm != 1 && isAlgorithm != 2 && isAlgorithm != 3 && isAlgorithm != 4) {
             return;
