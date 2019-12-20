@@ -65,7 +65,9 @@ public:
 
         if (isAlgorithm == 3 || isAlgorithm == 4) {
             cout << "请输入磁头移动方向direction（!0为向外，0为向内）：";
-            cin >> direction;
+            int in = 0;
+            cin >> in;
+            direction = in != 0;
             cout << "您选择的磁头移动方向direction为：" << (direction ? "向外" : "向内");
         }
 
