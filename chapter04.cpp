@@ -89,37 +89,37 @@ public:
         //分区状况
         cout << left << setw(15) << "";
         for (int i = 1; i <= PartitionNum; i++) {
-            cout << right << setw(8) << "分区" << setw(2) << i;
+            cout << right << setw(10) << "Partition" << setw(2) << i;
         }
-        cout << endl << left << setw(15) << "已分配容量";
+        cout << endl << left << setw(15) << "Assigned";
         for (int i = 1; i <= PartitionNum; i++) {
-            cout << right << setw(10) << FreePartition[i] - fp[i];
+            cout << right << setw(12) << FreePartition[i] - fp[i];
         }
-        cout << endl << left << setw(15) << "剩余容量";
+        cout << endl << left << setw(15) << "Available";
         for (int i = 1; i <= PartitionNum; i++) {
-            cout << right << setw(10) << fp[i];
+            cout << right << setw(12) << fp[i];
         }
         cout << endl;
 
         //进程分配状况
         cout << left << setw(15) << "";
         for (int i = 1; i <= ProcessNum; i++) {
-            cout << right << setw(8) << "进程" << setw(2) << i;
+            cout << right << setw(10) << "Process" << setw(2) << i;
         }
-        cout << endl << left << setw(15) << "所分配分区号";
+        cout << endl << left << setw(15) << "ProcessNum";
         for (int i = 1; i <= ProcessNum; i++) {
             switch (isAlgorithm) {
                 case 1:
-                    cout << right << setw(10) << pg[i].FirstPartition;
+                    cout << right << setw(12) << pg[i].FirstPartition;
                     break;
                 case 2:
-                    cout << right << setw(10) << pg[i].CycleFirstPartition;
+                    cout << right << setw(12) << pg[i].CycleFirstPartition;
                     break;
                 case 3:
-                    cout << right << setw(10) << pg[i].BestPartition;
+                    cout << right << setw(12) << pg[i].BestPartition;
                     break;
                 case 4:
-                    cout << right << setw(10) << pg[i].WorstPartition;
+                    cout << right << setw(12) << pg[i].WorstPartition;
                     break;
             }
         }

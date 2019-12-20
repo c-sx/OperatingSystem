@@ -56,9 +56,9 @@ public:
         int newRequest;
 
         //剩余资源数量参考
-        cout << endl << "剩余资源情况为：";
+        cout << endl << endl << "剩余资源情况为：" << endl;
         for (int i = 1; i <= m; i++) {
-            cout << setw(6) << "资源" << setw(2) << i << setw(6) << "剩余：" << setw(2) << a[i];
+            cout << setw(6) << "资源" << setw(2) << i << setw(6) << "剩余数量：" << setw(2) << a[i] << endl;
         }
 
         //判断新请求

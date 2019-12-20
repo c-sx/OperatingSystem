@@ -221,38 +221,41 @@ public:
 
             cout << left << setw(15) << "";
             for (int i = 1; i <= n; i++) {
-                cout << right << setw(8) << "进程" << setw(2) << i;
+                cout << right << setw(8) << "Process" << setw(2) << i;
             }
             cout << endl;
 
-            cout << left << setw(15) << "到达时间";
+            cout << left << setw(15) << "ArrivalTime";
             for (int i = 1; i <= n; i++) {
                 cout << right << setw(10) << ArrivalTime[i];
             }
             cout << endl;
 
-            cout << left << setw(15) << "服务时间";
+            cout << left << setw(15) << "ServiceTime";
             for (int i = 1; i <= n; i++) {
                 cout << right << setw(10) << ServiceTime[i];
             }
             cout << endl;
 
-            cout << left << setw(15) << "完成时间";
+            cout << left << setw(15) << "FinishTime";
             for (int i = 1; i <= n; i++) {
                 cout << right << setw(10) << FinishTime[i];
             }
             cout << endl;
 
-            cout << left << setw(15) << "周转时间";
+            cout << left << setw(15) << "WholeTime";
             for (int i = 1; i <= n; i++) {
                 cout << right << setw(10) << WholeTime[i];
             }
-            cout << right << setw(20) << "平均周转时间:" << setw(10) << AverageWT << endl;
+            cout << endl;
 
-            cout << left << setw(15) << "带权周转时间";
+            cout << left << setw(15) << "WeightWholeTime";
             for (int i = 1; i <= n; i++) {
                 cout << right << setw(10) << WeightWholeTime[i];
             }
+            cout << endl;
+
+            cout << right << setw(20) << "平均周转时间:" << setw(10) << AverageWT << endl;
             cout << right << setw(20) << "平均带权周转时间:" << setw(10) << AverageWWT << endl;
         }
     }
