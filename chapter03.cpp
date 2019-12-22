@@ -89,6 +89,7 @@ public:
         }
     }
 
+    //进行安全进程检测并输出安全序列
     void Order(Progress pg[MaxNumber], int a[MaxNumber]) {
         //定义下标数
         int orderNum = 0;

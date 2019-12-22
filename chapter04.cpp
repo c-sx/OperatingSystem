@@ -106,7 +106,7 @@ public:
         for (int i = 1; i <= ProcessNum; i++) {
             cout << right << setw(10) << "Process" << setw(2) << i;
         }
-        cout << endl << left << setw(15) << "ProcessNum";
+        cout << endl << left << setw(15) << "PartitionNum";
         for (int i = 1; i <= ProcessNum; i++) {
             switch (isAlgorithm) {
                 case 1:

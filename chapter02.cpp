@@ -139,12 +139,12 @@ public:
 
         cout << left << setw(15) << "WeightWholeTime";
         for (int i = 1; i <= n; i++) {
-            cout << right << setw(10) << progress[i].WeightWholeTime;
+            cout << right << setw(10) << fixed << setprecision(2) << progress[i].WeightWholeTime;
         }
         cout << endl;
 
-        cout << right << setw(30) << "平均周转时间:" << AverageWT << endl;
-        cout << right << setw(30) << "平均带权周转时间:" << AverageWWT << endl;
+        cout << "平均周转时间:" << setprecision(2) << AverageWT << endl;
+        cout << "平均带权周转时间:" << setprecision(2) << AverageWWT << endl;
     }
 
 

@@ -49,31 +49,31 @@ public:
         }
     }
 
-    //调用FCFS算法进行调度计算
-    void AlgorithmFCFS() {
+//调用FCFS算法进行调度计算
+void AlgorithmFCFS() {
 
-        //初始化FinishTime[0]
-        FinishTime[0] = 0;
+    //初始化FinishTime[0]
+    FinishTime[0] = 0;
 
-        for (int i = 1; i <= n; i++) {
-            //计算完成时间
-            FinishTime[i] = FinishTime[i - 1] + ServiceTime[i];
+    for (int i = 1; i <= n; i++) {
+        //计算完成时间
+        FinishTime[i] = FinishTime[i - 1] + ServiceTime[i];
 
-            //计算周转时间
-            WholeTime[i] = FinishTime[i] - ArrivalTime[i];
+        //计算周转时间
+        WholeTime[i] = FinishTime[i] - ArrivalTime[i];
 
-            //计算带权周转时间
-            WeightWholeTime[i] = (double) WholeTime[i] / ServiceTime[i];
+        //计算带权周转时间
+        WeightWholeTime[i] = (double) WholeTime[i] / ServiceTime[i];
 
-            //计算平均周转时间
-            AverageWT += WholeTime[i];
+        //计算平均周转时间
+        AverageWT += WholeTime[i];
 
-            //计算平局带权周转时间
-            AverageWWT += WeightWholeTime[i];
-        }
-        AverageWT = (double) AverageWT / n;
-        AverageWWT = (double) AverageWWT / n;
+        //计算平局带权周转时间
+        AverageWWT += WeightWholeTime[i];
     }
+    AverageWT = (double) AverageWT / n;
+    AverageWWT = (double) AverageWWT / n;
+}
 
     //调用SJF算法进行调度计算
     void AlgorithmSJF() {
@@ -179,7 +179,7 @@ public:
             CopyFinishTime[i] = FinishTime[i];
         }
 
-        if (FinishTime[1] >= 0)//判断是否已有数据输入
+        if (FinishTime[1] >= 0) {//判断是否已有数据输入
             //根据完成时间排序输出
             for (int i = 1; i <= n; i++) {
 
@@ -211,6 +211,7 @@ public:
                     cout << "时刻0进程" << i << "开始运行" << endl;
                 }
             }
+        }
     }
 
     //输出周转时间、带权周转时间、平均周转时间及带权平均周转时间
@@ -251,12 +252,12 @@ public:
 
             cout << left << setw(15) << "WeightWholeTime";
             for (int i = 1; i <= n; i++) {
-                cout << right << setw(10) << WeightWholeTime[i];
+                cout << right << setw(10) << fixed << setprecision(2) << WeightWholeTime[i];
             }
             cout << endl;
 
-            cout << right << setw(20) << "平均周转时间:" << setw(10) << AverageWT << endl;
-            cout << right << setw(20) << "平均带权周转时间:" << setw(10) << AverageWWT << endl;
+            cout << "平均周转时间:" << setw(10) << setprecision(2) << AverageWT << endl;
+            cout << "平均带权周转时间:" << setw(10) << setprecision(2) << AverageWWT << endl;
         }
     }
 };
