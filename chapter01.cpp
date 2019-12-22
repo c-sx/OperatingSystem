@@ -49,31 +49,31 @@ public:
         }
     }
 
-//调用FCFS算法进行调度计算
-void AlgorithmFCFS() {
+    //调用FCFS算法进行调度计算
+    void AlgorithmFCFS() {
 
-    //初始化FinishTime[0]
-    FinishTime[0] = 0;
+        //初始化FinishTime[0]
+        FinishTime[0] = 0;
 
-    for (int i = 1; i <= n; i++) {
-        //计算完成时间
-        FinishTime[i] = FinishTime[i - 1] + ServiceTime[i];
+        for (int i = 1; i <= n; i++) {
+            //计算完成时间
+            FinishTime[i] = FinishTime[i - 1] + ServiceTime[i];
 
-        //计算周转时间
-        WholeTime[i] = FinishTime[i] - ArrivalTime[i];
+            //计算周转时间
+            WholeTime[i] = FinishTime[i] - ArrivalTime[i];
 
-        //计算带权周转时间
-        WeightWholeTime[i] = (double) WholeTime[i] / ServiceTime[i];
+            //计算带权周转时间
+            WeightWholeTime[i] = (double) WholeTime[i] / ServiceTime[i];
 
-        //计算平均周转时间
-        AverageWT += WholeTime[i];
+            //计算平均周转时间
+            AverageWT += WholeTime[i];
 
-        //计算平局带权周转时间
-        AverageWWT += WeightWholeTime[i];
+            //计算平局带权周转时间
+            AverageWWT += WeightWholeTime[i];
+        }
+        AverageWT = (double) AverageWT / n;
+        AverageWWT = (double) AverageWWT / n;
     }
-    AverageWT = (double) AverageWT / n;
-    AverageWWT = (double) AverageWWT / n;
-}
 
     //调用SJF算法进行调度计算
     void AlgorithmSJF() {
